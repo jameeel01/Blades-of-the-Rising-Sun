@@ -92,16 +92,36 @@ def riddle_challenge(character):
         print("The monk stabs you for insulting his intelligence. You lose 2 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
+def shrine_challenge(character):
+    print("\nYou discover a glowing shrine.")
+    print("[1] Drink from the shrine")
+    print("[2] Leave it alone")
+
+    choice = input("Your choice: ").strip()
+    while choice not in ["1", "2"]:
+        choice = input("Invalid choice. Enter 1 or 2: ").strip()
+
+    if choice == "1":
+        heal = random.randint(1, 3)
+        if character["hp"] == character["max_hp"]:
+            print("This shrine's water tastes like moldy feet and old coins.")
+        else:
+            character["hp"] = min(character["hp"] + heal, character["max_hp"])
+            print(f"You feel warmth. HP restored by {heal}.")
+            print(f"HP: {character['hp']}/{character['max_hp']}")
+    else:
+        print("You bow and walk away.")
+
 def main():
     test_character = {
-        "hp": 10,
+        "hp": 2,
         "max_hp": 10,
         "attack_power": 5,
         "experience": 0
     }
 
-    (combat_challenge(test_character))
-    riddle_challenge(test_character)
+
+    shrine_challenge(test_character)
 
 
 if __name__ == "__main__":
