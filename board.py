@@ -37,4 +37,13 @@ def make_board(rows, columns):
             board[(row, column)] = f"{random_description} ({row},{column})"
     return board
 
+def describe_current_location(board, character):
+    position = (character["x_coordinate"], character["y_coordinate"])
+    print(f"\nLocation: {position}")
+    print(board[position])
+    print(
+        f"HP: {character['hp']}/{character['max_hp']} , "
+        f"Level: {character['level']} , XP: {character['experience']}"
+    )
+
 
