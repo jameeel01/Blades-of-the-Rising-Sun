@@ -8,7 +8,12 @@ def get_user_choice():
     """
     direction_list = [1, 2, 3, 4]
     while True:
-        user_input = input("Which direction would you like to go? Please type one of the corresponding numbers:\n1. North\n2. South\n3. East\n4. West\n\nDirection: ")
+        print("Which direction would you like to go? Please type one of the corresponding numbers:")
+        print("[1] North")
+        print("[2] South")
+        print("[3] East")
+        print("[4] West")
+        user_input = input("Direction: ")
         if user_input == "":
             print("You must enter a number — don't leave it blank!\n")
             continue
