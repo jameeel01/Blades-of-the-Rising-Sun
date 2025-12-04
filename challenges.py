@@ -70,6 +70,28 @@ def combat_challenge(character):
     else:
         print("\nYou retreat from battle.")
 
+
+def riddle_challenge(character):
+    print("\nA wandering monk stops you.")
+    print("What walks on four legs in the morning, two at noon, and three in the evening?")
+    print("[1] A dragon")
+    print("[2] A human")
+    print("[3] A wolf")
+    print("[4] A mouse")
+
+    answer = input("Your choice: ").strip()
+    while answer not in ["1", "2", "3", "4"]:
+        answer = input("Invalid choice. Enter 1, 2, 3, or 4: ").strip()
+
+    if answer == "2":
+        character["experience"] += 1
+        print("Correct. You gain 1 experience.")
+        print(f"Experience: {character['experience']}")
+    else:
+        character["hp"] -= 2
+        print("The monk stabs you for insulting his intelligence. You lose 2 HP.")
+        print(f"HP: {character['hp']}/{character['max_hp']}")
+
 def main():
     test_character = {
         "hp": 10,
@@ -79,6 +101,7 @@ def main():
     }
 
     (combat_challenge(test_character))
+    riddle_challenge(test_character)
 
 
 if __name__ == "__main__":
