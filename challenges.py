@@ -70,7 +70,6 @@ def combat_challenge(character):
     else:
         print("\nYou retreat from battle.")
 
-
 def riddle_challenge(character):
     print("\nA wandering monk stops you.")
     print("What walks on four legs in the morning, two at noon, and three in the evening?")
@@ -112,16 +111,39 @@ def shrine_challenge(character):
     else:
         print("You bow and walk away.")
 
+def moral_challenge(character):
+    print("\nA starving thief steals rice from a farmer.")
+    print("[1] Kill the thief")
+    print("[2] Let the thief go")
+    print("[3] Give your own food")
+
+    choice = input("Your choice: ").strip()
+    while choice not in ["1", "2", "3"]:
+        choice = input("Invalid choice. Enter 1, 2, or 3: ").strip()
+
+    if choice == "1":
+        character["experience"] += 1
+        print("You kill the thief. You gain 1 experience.")
+        print(f"Experience: {character['experience']}")
+    elif choice == "2":
+        character["experience"] -= 1
+        print("The thief escapes. The farmer curses your name. You lose 1 experience")
+        print(f"Experience: {character['experience']}")
+    elif choice == "3":
+        character["hp"] -= 2
+        print("You give your food and starve for the rest of the day. You lose 2 HP.")
+        print(f"HP: {character['hp']}/{character['max_hp']}")
+
 def main():
     test_character = {
-        "hp": 2,
+        "hp": 10,
         "max_hp": 10,
         "attack_power": 5,
-        "experience": 0
+        "experience": 2
     }
 
 
-    shrine_challenge(test_character)
+    moral_challenge(test_character)
 
 
 if __name__ == "__main__":
