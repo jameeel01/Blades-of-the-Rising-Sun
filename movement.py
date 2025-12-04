@@ -32,16 +32,16 @@ def validate_move(character, direction):
     :postcondition: determines whether the move is possible within the grid without changing the character's position
     :return: True if the move is valid, False if it would go off the board
 
-    >>> test_character = {"X-coordinate": 2, "Y-coordinate": 2}
+    >>> test_character = {"x-coordinate": 2, "y-coordinate": 2}
     >>> validate_move(test_character, 1)
     True
 
-    >>> test_character = {"X-coordinate": 0, "Y-coordinate": 0}
+    >>> test_character = {"x-coordinate": 0, "y-coordinate": 0}
     >>> validate_move(test_character, 1)
     False
     """
-    new_row_location = character["X-coordinate"]
-    new_column_location = character["Y-coordinate"]
+    new_row_location = character["x-coordinate"]
+    new_column_location = character["y-coordinate"]
 
     if direction == 1:
         new_row_location -= 1
@@ -70,24 +70,24 @@ def move_character(character, direction):
     :postcondition: updates the character's coordinates based on the direction entered
     :return: the updated character dictionary reflecting the new position
 
-    >>> test_character = {"X-coordinate": 2, "Y-coordinate": 2}
+    >>> test_character = {"x-coordinate": 2, "y-coordinate": 2}
     >>> move_character(test_character, 1)
     >>> test_character
     {'X-coordinate': 1, 'Y-coordinate': 2}
 
-    >>> test_character = {"X-coordinate": 0, "Y-coordinate": 0}
+    >>> test_character = {"x-coordinate": 0, "y-coordinate": 0}
     >>> move_character(test_character, 4)
     >>> test_character
     {'X-coordinate': 0, 'Y-coordinate': -1}
     """
 
     if direction == 1:
-        character["X-coordinate"] -= 1
+        character["x-coordinate"] -= 1
     elif direction == 2:
-        character["X-coordinate"] += 1
+        character["x-coordinate"] += 1
     elif direction == 3:
-        character["Y-coordinate"] += 1
+        character["y-coordinate"] += 1
     elif direction == 4:
-        character["Y-coordinate"] -= 1
+        character["y-coordinate"] -= 1
     else:
         return
