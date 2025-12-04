@@ -46,4 +46,8 @@ def describe_current_location(board, character):
         f"Level: {character['level']} , XP: {character['experience']}"
     )
 
+def check_if_goal_attained(character, boss_coordinates):
+    position = (character["x_coordinate"], character["y_coordinate"])
+    return position == boss_coordinates and character["level"] >= 3
+
 

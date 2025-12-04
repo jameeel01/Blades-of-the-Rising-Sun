@@ -25,7 +25,7 @@ def execute_challenge(character):
 def combat_challenge(character):
     foes = ["lost child", "rogue samurai", "wild boar", "mountain thief", "seductive ninja"]
     enemy = random.choice(foes)
-    enemy_hp = 6
+    enemy_hp = 6 + (character["level"] * 3)
 
     print(f"\nA {enemy} challenges you to battle!")
 
@@ -142,7 +142,7 @@ def final_boss_fight(character):
         boss = character["friend_name"]
         print(f"\nRyūichi stands before you as a hardened Ronin.")
 
-    boss_hp = 20
+    boss_hp = 20 + (character["level"] * 5)
 
     while boss_hp > 0 and character["hp"] > 0:
         print(f"\nYour HP: {character['hp']}/{character['max_hp']} | {boss} HP: {boss_hp}")
@@ -159,22 +159,25 @@ def final_boss_fight(character):
 
         if choice == "1":
             if player_roll >= boss_roll:
-                boss_hp -= 4
-                print(f"You strike for 4 damage. {boss} HP: {boss_hp}")
+                damage = 4 + (character["level"] * 2)
+                boss_hp -= damage
+                print(f"You strike for {damage} damage. {boss} HP: {boss_hp}")
             else:
-                character["hp"] -= 4
-                print(f"You are struck for 4 damage.")
+                damage = 4 + character["level"]
+                character["hp"] -= damage
+                print(f"You are struck for {damage} damage.")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "2":
-            reduced = random.randint(1, 3)
+            reduced = 1 + character["level"]
             character["hp"] -= reduced
             print(f"You block but take {reduced} damage.")
             print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "3":
             if random.randint(1, 10) >= 6:
-                boss_hp -= 7
+                damage = 7 + (character["level"] * 3)
+                boss_hp -= damage
                 print(f"Your all-out strike deals 7 damage. {boss} HP: {boss_hp}")
             else:
                 character["hp"] -= 5
@@ -198,7 +201,7 @@ def main():
     }
 
 
-    moral_challenge(test_character)
+    final_boss_fight(test_character)
 
 
 if __name__ == "__main__":
