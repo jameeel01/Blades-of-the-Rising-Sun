@@ -19,7 +19,7 @@ def execute_challenge(character):
         riddle_challenge(character)
     elif challenge_type == "shrine":
         shrine_challenge(character)
-    elif challenge_type == "moral":
+    else:
         moral_challenge(character)
 
 def combat_challenge(character):
@@ -133,6 +133,61 @@ def moral_challenge(character):
         character["hp"] -= 2
         print("You give your food and starve for the rest of the day. You lose 2 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def final_boss_fight(character):
+    if character["path"] == "ronin":
+        boss = "the Emperor"
+        print("\nYou storm the palace with Ryūichi at your side.")
+    else:
+        boss = character["friend_name"]
+        print(f"\nRyūichi stands before you as a hardened Ronin.")
+
+    boss_hp = 20
+
+    while boss_hp > 0 and character["hp"] > 0:
+        print(f"\nYour HP: {character['hp']}/{character['max_hp']} | {boss} HP: {boss_hp}")
+        print("[1] Attack")
+        print("[2] Defend")
+        print("[3] Risky Strike")
+
+        choice = input("Your move: ").strip()
+        while choice not in ["1", "2", "3"]:
+            choice = input("Invalid choice. Enter 1, 2, or 3: ").strip()
+
+        player_roll = random.randint(1, 10) + character["attack_power"]
+        boss_roll = random.randint(1, 10) + 4
+
+        if choice == "1":
+            if player_roll >= boss_roll:
+                boss_hp -= 4
+                print(f"You strike for 4 damage. {boss} HP: {boss_hp}")
+            else:
+                character["hp"] -= 4
+                print(f"You are struck for 4 damage.")
+                print(f"HP: {character['hp']}/{character['max_hp']}")
+
+        elif choice == "2":
+            reduced = random.randint(1, 3)
+            character["hp"] -= reduced
+            print(f"You block but take {reduced} damage.")
+            print(f"HP: {character['hp']}/{character['max_hp']}")
+
+        elif choice == "3":
+            if random.randint(1, 10) >= 6:
+                boss_hp -= 7
+                print(f"Your all-out strike deals 7 damage. {boss} HP: {boss_hp}")
+            else:
+                character["hp"] -= 5
+                print("Your all-out strike fails. You take 5 damage.")
+                print(f"HP: {character['hp']}/{character['max_hp']}")
+
+    if character["hp"] > 0:
+        print(f"\nYou have defeated {boss}.")
+        return True
+
+    character["hp"] = 0
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+    return False
 
 def main():
     test_character = {
