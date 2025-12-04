@@ -14,3 +14,24 @@ def make_character(player_name, path):
 
 def is_alive(character):
     return character["hp"] > 0
+
+def character_has_leveled(character):
+    if character["level"] == 1 and character["experience"] >= 3:
+        return True
+    if character["level"] == 2 and character["experience"] >= 6:
+        return True
+    return False
+
+def execute_level_up(character):
+    if character["level"] >= 3:
+        return
+
+    character["level"] += 1
+    character["max_hp"] += 5
+    character["attack_power"] += 1
+    character["hp"] = character["max_hp"]
+
+    print(
+        f"\nLevel Up! You are now level {character['level']}."
+        f" Max HP: {character['max_hp']}, Attack: {character['attack_power']}\n"
+    )
