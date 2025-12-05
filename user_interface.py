@@ -1,6 +1,7 @@
 import pyfiglet
 import time
 import sys
+import random
 
 def type_text_slowly(text, delay=0.02):
     for character in str(text):
@@ -8,7 +9,6 @@ def type_text_slowly(text, delay=0.02):
         sys.stdout.flush()
         time.sleep(delay)
     sys.stdout.write("\n")
-
 
 def print_title_screen():
     result = pyfiglet.figlet_format("BLADES OF THE RISING SUN", font="doom")
@@ -26,15 +26,11 @@ def print_intro_story(character):
         )
         type_text_slowly("Ryūichi remained loyal to the Emperor.\n")
 
-
-
-
 def print_death_screen(character):
     banner = pyfiglet.figlet_format("YOU HAVE FALLEN", font="doom")
     print(banner)
     type_text_slowly(f"{character['name']}'s blade falls into the dust.")
     type_text_slowly("The wind carries your story into silence...\n")
-
 
 def print_victory_screen(character):
     banner = pyfiglet.figlet_format("VICTORY", font="big")
@@ -64,7 +60,6 @@ def print_victory_screen(character):
 
     type_text_slowly(f"{character['name']} stands beneath the rising sun.")
     type_text_slowly("Your legend is written in steel and sacrifice.\n")
-
 
 def print_final_duel_banner(boss_name):
     banner = pyfiglet.figlet_format("FINAL DUEL", font="slant")
@@ -133,3 +128,57 @@ def choose_path():
             type_text_slowly("\"Then we walk as ghosts,\" he says.")
             type_text_slowly("\"And we reshape history with steel.\"\n")
             return "ronin"
+
+def ryuichi_random_dialogue(character):
+    tragic_lines = [
+        "\"We were boys when we learned to kill...was there ever another way?\"",
+        "\"Every road we walk seems soaked in blood now.\""
+    ]
+
+    vengeful_lines = [
+        "\"The Emperor will choke on his gold.\"",
+        "\"Mercy built this rotten empire.\""
+    ]
+
+    honor_lines = [
+        "\"A blade must serve purpose, or it becomes a curse.\"",
+        "\"Even rebels must have rules.\""
+    ]
+
+    if character["honor"] >= 3:
+        line = random.choice(honor_lines)
+    elif character["honor"] <= -3:
+        line = random.choice(vengeful_lines)
+    else:
+        line = random.choice(tragic_lines)
+
+    type_text_slowly(f"\nRyūichi: {line}\n")
+
+def determine_betrayal(character):
+    if character["bond_with_Ryūichi"] < -2 or character["honor"] <= -4:
+        character["betrayal"] = True
+    else:
+        character["betrayal"] = False
+
+def ryuichi_flashback(character):
+    if character["bond_with_Ryūichi"] >= 4:
+        flashbacks = [
+            "You remember the two of you stealing training swords as children.",
+            "You remember Ryūichi shielding you from your master's strike.",
+            "You remember laughing beside the fire after your first victory together."
+        ]
+    elif character["bond_with_Ryūichi"] <= -2:
+        flashbacks = [
+            "You remember the night Ryūichi turned his back on you.",
+            "You remember the argument that ended in drawn blades.",
+            "You remember walking away while he stood alone in the rain."
+        ]
+    else:
+        flashbacks = [
+            "You remember the two of you training in silence at dawn.",
+            "You remember fighting side by side without speaking.",
+            "You remember Ryūichi dragging you from the battlefield while bleeding."
+        ]
+
+    type_text_slowly("\n[FLASHBACK]: ")
+    type_text_slowly(random.choice(flashbacks))
