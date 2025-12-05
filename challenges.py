@@ -173,16 +173,17 @@ def moral_challenge(character):
 
     if choice == "1":
         character["experience"] += 1
-        type_text_slowly("You kill the thief. You gain 1 experience.")
-        print(f"Experience: {character['experience']}")
+        character["honor"] -= 2
+        type_text_slowly("You kill the thief and Ryūichi shakes his head in dismay. You lose honor but gain 1 experience.")
     elif choice == "2":
-        character["experience"] -= 1
-        type_text_slowly("The thief escapes. The farmer curses your name. You lose 1 experience")
-        print(f"Experience: {character['experience']}")
+        character["bond_with_Ryūichi"] += 1
+        type_text_slowly("You spare the thief. Ryūichi quietly nods in approval.")
     elif choice == "3":
-        character["hp"] -= 2
-        type_text_slowly("You give your food and starve for the rest of the day. You lose 2 HP.")
-        print(f"HP: {character['hp']}/{character['max_hp']}")
+        character["honor"] += 2
+        character["bond_with_Ryūichi"] += 2
+        type_text_slowly("You give your food away. Ryūichi puts his hand on your shoulder and smiles.")
+
+    print(f"Experience: {character['experience']}")
 
 def ambush_challenge(character):
     type_text_slowly("\nBandits leap from the trees!")
