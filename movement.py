@@ -6,26 +6,23 @@ def get_user_choice():
     :postcondition: returns the direction number that the user selected
     :return: an integer representing the chosen direction (1 = North, 2 = South, 3 = East, 4 = West)
     """
-    direction_list = [1, 2, 3, 4]
     while True:
         print("Which direction would you like to go? Please type one of the corresponding numbers:")
         print("[1] North")
         print("[2] South")
         print("[3] East")
         print("[4] West")
-        user_input = input("Direction: ")
-        if user_input == "":
-            print("You must enter a number — don't leave it blank!\n")
-            continue
-        if not user_input.isdigit():
-            print("Please enter a valid number between 1 and 4.\n")
-            continue
+        print("[Q] Quit")
+        user_input = input("Direction: ").strip().lower()
 
-        direction = int(user_input)
-        if direction in direction_list:
-            return direction
+        if user_input == "q":
+            return "quit"
+        elif user_input.isdigit():
+            direction = int(user_input)
+            if direction in [1, 2, 3, 4]:
+                return direction
         else:
-            print("Please enter a valid number between 1 and 4.\n")
+            print("Invalid input. Please try again.\n")
 
 def validate_move(character, direction):
     """
@@ -59,7 +56,7 @@ def validate_move(character, direction):
     else:
         return False
 
-    if new_row_location in range(0, 5) and new_column_location in range(0, 5):
+    if new_row_location in range(0, 10) and new_column_location in range(0, 10):
         return True
     else:
         return False

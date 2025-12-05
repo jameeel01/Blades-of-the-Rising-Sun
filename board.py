@@ -38,7 +38,7 @@ def make_board(rows, columns):
     return board
 
 def describe_current_location(board, character):
-    position = (character["x_coordinate"], character["y_coordinate"])
+    position = (character["x-coordinate"], character["y-coordinate"])
     print(f"\nLocation: {position}")
     print(board[position])
     print(
@@ -47,7 +47,7 @@ def describe_current_location(board, character):
     )
 
 def check_if_goal_attained(character, boss_coordinates):
-    position = (character["x_coordinate"], character["y_coordinate"])
+    position = (character["x-coordinate"], character["y-coordinate"])
     return position == boss_coordinates and character["level"] >= 3
 
 
