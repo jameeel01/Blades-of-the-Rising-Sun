@@ -1,5 +1,13 @@
 import random
+import time
+import sys
 
+def type_text_slowly(text, delay=0.02):
+    for character in str(text):
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(delay)
+    sys.stdout.write("\n")
 
 def execute_challenge(character):
     challenge_type = random.choice([
@@ -68,7 +76,7 @@ def combat_challenge(character):
     enemy = random.choice(foes)
     enemy_hp = 6 + (character["level"] * 3)
 
-    print(f"\nA {enemy} challenges you to battle!")
+    type_text_slowly(f"\nA {enemy} challenges you to battle!")
 
     while enemy_hp > 0 and character["hp"] > 0:
         print(f"\nYour HP: {character['hp']}/{character['max_hp']} | {enemy.title()} HP: {enemy_hp}")
@@ -86,34 +94,34 @@ def combat_challenge(character):
         if choice == "1":
             if player_roll >= enemy_roll:
                 enemy_hp -= 3
-                print(f"You strike the {enemy} for 3 damage!")
+                type_text_slowly(f"You strike the {enemy} for 3 damage!")
             else:
                 character["hp"] -= 3
-                print(f"The {enemy} hits you for 3 damage!")
+                type_text_slowly(f"The {enemy} hits you for 3 damage!")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "2":
             character["hp"] -= 1
-            print("You defend but still take 1 damage.")
+            type_text_slowly("You defend but still take 1 damage.")
             print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "3":
             if random.randint(1, 10) >= 4:
-                print("You are being watched by the locals and can't run!")
+                type_text_slowly("You are being watched by the locals and can't run!")
             else:
-                print("You cover your face and flee!")
+                type_text_slowly("You cover your face and flee!")
                 break
 
     if enemy_hp <= 0:
-        print(f"\nYou have defeated the {enemy}.")
+        type_text_slowly(f"\nYou have defeated the {enemy}.")
         character["experience"] += 1
-        print(f"Experience increased to {character['experience']}")
+        type_text_slowly(f"Experience increased to {character['experience']}")
     else:
-        print("\nYou retreat from battle.")
+        type_text_slowly("\nYou retreat from battle.")
 
 def riddle_challenge(character):
-    print("\nA wandering monk stops you.")
-    print("What walks on four legs in the morning, two at noon, and three in the evening?")
+    type_text_slowly("\nA wandering monk stops you.")
+    type_text_slowly("What walks on four legs in the morning, two at noon, and three in the evening?")
     print("[1] A dragon")
     print("[2] A human")
     print("[3] A wolf")
@@ -125,15 +133,15 @@ def riddle_challenge(character):
 
     if answer == "2":
         character["experience"] += 1
-        print("Correct. You gain 1 experience.")
+        type_text_slowly("Correct. You gain 1 experience.")
         print(f"Experience: {character['experience']}")
     else:
         character["hp"] -= 2
-        print("The monk stabs you for insulting his intelligence. You lose 2 HP.")
+        type_text_slowly("The monk stabs you for insulting his intelligence. You lose 2 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def shrine_challenge(character):
-    print("\nYou discover a glowing shrine.")
+    type_text_slowly("\nYou discover a glowing shrine.")
     print("[1] Drink from the shrine")
     print("[2] Leave it alone")
 
@@ -144,16 +152,16 @@ def shrine_challenge(character):
     if choice == "1":
         heal = random.randint(1, 3)
         if character["hp"] == character["max_hp"]:
-            print("This shrine's water tastes like moldy feet and old coins.")
+            type_text_slowly("This shrine's water tastes like moldy feet and old coins.")
         else:
             character["hp"] = min(character["hp"] + heal, character["max_hp"])
-            print(f"You feel warmth. HP restored by {heal}.")
+            type_text_slowly(f"You feel warmth. HP restored by {heal}.")
             print(f"HP: {character['hp']}/{character['max_hp']}")
     else:
         print("You bow and walk away.")
 
 def moral_challenge(character):
-    print("\nA starving thief steals rice from a farmer.")
+    type_text_slowly("\nA starving thief steals rice from a farmer.")
     print("[1] Kill the thief")
     print("[2] Let the thief go")
     print("[3] Give your own food\n")
@@ -164,26 +172,26 @@ def moral_challenge(character):
 
     if choice == "1":
         character["experience"] += 1
-        print("You kill the thief. You gain 1 experience.")
+        type_text_slowly("You kill the thief. You gain 1 experience.")
         print(f"Experience: {character['experience']}")
     elif choice == "2":
         character["experience"] -= 1
-        print("The thief escapes. The farmer curses your name. You lose 1 experience")
+        type_text_slowly("The thief escapes. The farmer curses your name. You lose 1 experience")
         print(f"Experience: {character['experience']}")
     elif choice == "3":
         character["hp"] -= 2
-        print("You give your food and starve for the rest of the day. You lose 2 HP.")
+        type_text_slowly("You give your food and starve for the rest of the day. You lose 2 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def ambush_challenge(character):
-    print("\nBandits leap from the trees!")
+    type_text_slowly("\nBandits leap from the trees!")
     damage = random.randint(2,4)
     character["hp"] -= damage
-    print(f"You escape but lose {damage} HP.")
+    type_text_slowly(f"You escape but lose {damage} HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def traveler_challenge(character):
-    print("\nA lost traveler asks for protection.")
+    type_text_slowly("\nA lost traveler asks for protection.")
     print("[1] Help")
     print("[2] Ignore")
     choice = input("Your choice: ").strip()
@@ -191,140 +199,140 @@ def traveler_challenge(character):
         choice = input("Enter 1 or 2: ").strip()
     if choice == "1":
         character["experience"] += 1
-        print("You guide them safely. You gain 1 experience.")
+        type_text_slowly("You guide them safely. You gain 1 experience.")
         print(f"XP: {character['experience']}")
 
 def gamble_challenge(character):
-    print("\nA dice gambler challenges you.")
+    type_text_slowly("\nA dice gambler challenges you.")
     roll = random.randint(1,10)
     if roll >= 6:
         character["experience"] += 1
-        print("You win the gamble. You gain 1 experience.")
+        type_text_slowly("You win the gamble. You gain 1 experience.")
     else:
         character["hp"] -= 2
-        print("You lose and take 2 HP damage.")
+        type_text_slowly("You lose and take 2 HP damage.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def storm_challenge(character):
-    print("\nA violent storm batters you.")
+    type_text_slowly("\nA violent storm batters you.")
     character["hp"] -= 1
-    print("You lose 1 HP.")
+    type_text_slowly("You lose 1 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def merchant_challenge(character):
-    print("\nA merchant overcharges you for supplies.")
+    type_text_slowly("\nA merchant overcharges you for supplies.")
     character["hp"] += 1 if character["hp"] < character["max_hp"] else 0
-    print("You recover 1 HP.")
+    type_text_slowly("You recover 1 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def healer_challenge(character):
-    print("\nA wandering healer treats your wounds.")
+    type_text_slowly("\nA wandering healer treats your wounds.")
     heal = 2
     character["hp"] = min(character["hp"] + heal, character["max_hp"])
-    print(f"You gain {heal} HP.")
+    type_text_slowly(f"You gain {heal} HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def duel_challenge(character):
-    print("\nA warrior challenges you to a duel.")
+    type_text_slowly("\nA warrior challenges you to a duel.")
     if random.randint(1,10) >= 6:
         character["experience"] += 2
-        print("You win the duel! You gain 2 experience.")
+        type_text_slowly("You win the duel! You gain 2 experience.")
         print(f"XP: {character['experience']}")
     else:
         character["hp"] -= 3
-        print("You are wounded in the duel. You lose 3 HP.")
+        type_text_slowly("You are wounded in the duel. You lose 3 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def trap_challenge(character):
-    print("\nYou step into a hidden trap.")
+    type_text_slowly("\nYou step into a hidden trap.")
     character["hp"] -= 2
-    print("You lose 2 HP.")
+    type_text_slowly("You lose 2 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def spirit_challenge(character):
-    print("\nA restless spirit appears.")
+    type_text_slowly("\nA restless spirit appears.")
     if random.randint(1,10) >= 5:
         character["experience"] += 1
-        print("The spirit blesses you. You gain 1 experience.")
+        type_text_slowly("The spirit blesses you. You gain 1 experience.")
         print(f"XP: {character['experience']}")
     else:
         character["hp"] -= 2
-        print("The spirit drains your life. You lose 2 HP.")
+        type_text_slowly("The spirit drains your life. You lose 2 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def feast_challenge(character):
-    print("\nA village offers you a feast.")
+    type_text_slowly("\nA village offers you a feast.")
     character["hp"] = min(character["hp"] + 3, character["max_hp"])
-    print("You recover 3 HP.")
+    type_text_slowly("You recover 3 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def thief_challenge(character):
-    print("\nA thief steals from you in the night.")
+    type_text_slowly("\nA thief steals from you in the night.")
     character["experience"] -= 1
-    print("You lose 1 experience.")
+    type_text_slowly("You lose 1 experience.")
     print(f"XP: {character['experience']}")
 
 def boar_charge_challenge(character):
-    print("\nA wild boar charges!")
+    type_text_slowly("\nA wild boar charges!")
     damage = random.randint(2,4)
     character["hp"] -= damage
-    print(f"You take {damage} HP damage.")
+    type_text_slowly(f"You take {damage} HP damage.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def archer_challenge(character):
-    print("\nAn archer fires from the hills.")
+    type_text_slowly("\nAn archer fires from the hills.")
     character["hp"] -= 2
-    print("You lose 2 HP.")
+    type_text_slowly("You lose 2 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def bridge_challenge(character):
-    print("\nA broken bridge blocks your path.")
+    type_text_slowly("\nA broken bridge blocks your path.")
     if random.randint(1,10) >= 5:
-        print("You cross safely.")
+        type_text_slowly("You cross safely.")
     else:
         character["hp"] -= 2
-        print("You fall and lose 2 HP.")
+        type_text_slowly("You fall and lose 2 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def fire_challenge(character):
-    print("\nA sudden fire engulfs the path.")
+    type_text_slowly("\nA sudden fire engulfs the path.")
     character["hp"] -= 3
-    print("You lose 3 HP.")
+    type_text_slowly("You lose 3 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def blessing_challenge(character):
-    print("\nA monk blesses your journey.")
+    type_text_slowly("\nA monk blesses your journey.")
     character["experience"] += 1
-    print("You gain 1 XP.")
+    type_text_slowly("You gain 1 experience.")
     print(f"XP: {character['experience']}")
 
 def curse_challenge(character):
-    print("\nA dark curse weakens you.")
+    type_text_slowly("\nA dark curse weakens you.")
     character["hp"] -= 2
-    print("You lose 2 HP.")
+    type_text_slowly("You lose 2 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def training_challenge(character):
-    print("\nA veteran trains you briefly.")
+    type_text_slowly("\nA veteran trains you briefly.")
     character["experience"] += 2
-    print("You gain 2 experience.")
+    type_text_slowly("You gain 2 experience.")
     print(f"XP: {character['experience']}")
 
 def pilgrim_challenge(character):
-    print("\nA pilgrim shares wisdom.")
+    type_text_slowly("\nA pilgrim shares wisdom.")
     character["experience"] += 1
-    print("You gain 1 experience.")
+    type_text_slowly("You gain 1 experience.")
     print(f"XP: {character['experience']}")
 
 def assassin_challenge(character):
-    print("\nAn assassin strikes from the shadows!")
+    type_text_slowly("\nAn assassin strikes from the shadows!")
     damage = random.randint(3,5)
     character["hp"] -= damage
-    print(f"You lose {damage} HP.")
+    type_text_slowly(f"You lose {damage} HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def sacrifice_challenge(character):
-    print("\nA shrine demands sacrifice.")
+    type_text_slowly("\nA shrine demands sacrifice.")
     print("[1] Offer blood")
     print("[2] Refuse")
     choice = input("Your choice: ").strip()
@@ -333,19 +341,19 @@ def sacrifice_challenge(character):
     if choice == "1":
         character["hp"] -= 2
         character["experience"] += 2
-        print("You trade blood for power. You lose 2 HP but gain 2 experience.")
+        type_text_slowly("You trade blood for power. You lose 2 HP but gain 2 experience.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
         print(f"XP: {character['experience']}")
     else:
-        print("You run away and your ancestors keep you safe.")
+        type_text_slowly("You run away and your ancestors keep you safe.")
 
 def final_boss_fight(character):
     if character["path"] == "ronin":
         boss = "the Emperor"
-        print("\nYou storm the palace with Ryūichi at your side.")
+        type_text_slowly("\nYou storm the palace with Ryūichi at your side.")
     else:
         boss = character["friend_name"]
-        print(f"\nRyūichi stands before you as a hardened Ronin.")
+        type_text_slowly(f"\nRyūichi stands before you as a hardened Ronin.")
 
     boss_hp = 20 + (character["level"] * 5)
 
@@ -366,31 +374,31 @@ def final_boss_fight(character):
             if player_roll >= boss_roll:
                 damage = 4 + (character["level"] * 2)
                 boss_hp -= damage
-                print(f"You strike for {damage} damage. {boss} HP: {boss_hp}")
+                type_text_slowly(f"You strike for {damage} damage. {boss} HP: {boss_hp}")
             else:
                 damage = 4 + character["level"]
                 character["hp"] -= damage
-                print(f"You are struck for {damage} damage.")
+                type_text_slowly(f"You are struck for {damage} damage.")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "2":
             reduced = 1 + character["level"]
             character["hp"] -= reduced
-            print(f"You block but take {reduced} damage.")
+            type_text_slowly(f"You block but take {reduced} damage.")
             print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "3":
             if random.randint(1, 10) >= 6:
                 damage = 7 + (character["level"] * 3)
                 boss_hp -= damage
-                print(f"Your all-out strike deals 7 damage. {boss} HP: {boss_hp}")
+                type_text_slowly(f"Your all-out strike deals 7 damage. {boss} HP: {boss_hp}")
             else:
                 character["hp"] -= 5
-                print("Your all-out strike fails. You take 5 damage.")
+                type_text_slowly("Your all-out strike fails. You take 5 damage.")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
 
     if character["hp"] > 0:
-        print(f"\nYou have defeated {boss}.")
+        type_text_slowly(f"\nYou have defeated {boss}.")
         return True
 
     character["hp"] = 0
