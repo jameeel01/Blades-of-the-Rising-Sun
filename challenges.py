@@ -1,13 +1,6 @@
 import random
 
 
-def check_for_challenge():
-    number = random.randint(1, 10)
-    if number <= 4:
-        return True
-    else:
-        return False
-
 def execute_challenge(character):
     challenge_type = random.choice(
         ["combat", "riddle", "shrine", "moral"]
@@ -33,7 +26,7 @@ def combat_challenge(character):
         print(f"\nYour HP: {character['hp']}/{character['max_hp']} | {enemy.title()} HP: {enemy_hp}")
         print("[1] Attack")
         print("[2] Defend")
-        print("[3] Run away")
+        print("[3] Run away\n")
 
         choice = input("Your move: ").strip()
         while choice not in ["1", "2", "3"]:
@@ -115,7 +108,7 @@ def moral_challenge(character):
     print("\nA starving thief steals rice from a farmer.")
     print("[1] Kill the thief")
     print("[2] Let the thief go")
-    print("[3] Give your own food")
+    print("[3] Give your own food\n")
 
     choice = input("Your choice: ").strip()
     while choice not in ["1", "2", "3"]:
@@ -148,7 +141,7 @@ def final_boss_fight(character):
         print(f"\nYour HP: {character['hp']}/{character['max_hp']} | {boss} HP: {boss_hp}")
         print("[1] Attack")
         print("[2] Defend")
-        print("[3] Risky Strike")
+        print("[3] Risky Strike\n")
 
         choice = input("Your move: ").strip()
         while choice not in ["1", "2", "3"]:

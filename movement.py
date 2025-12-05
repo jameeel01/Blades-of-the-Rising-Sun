@@ -7,7 +7,7 @@ def get_user_choice():
     :return: an integer representing the chosen direction (1 = North, 2 = South, 3 = East, 4 = West)
     """
     while True:
-        print("Which direction would you like to go? Please type one of the corresponding numbers:")
+        print("\nWhich direction would you like to go? Please type one of the corresponding numbers:")
         print("[1] North")
         print("[2] South")
         print("[3] East")

@@ -50,4 +50,18 @@ def check_if_goal_attained(character, boss_coordinates):
     position = (character["x-coordinate"], character["y-coordinate"])
     return position == boss_coordinates and character["level"] >= 3
 
+def draw_ascii_map(character, boss_coordinates):
+    print()
+    for row in range(10):
+        row_display = ""
+        for column in range(10):
+            if (row, column) == (character["x-coordinate"], character["y-coordinate"]):
+                row_display += " 人 "
+            elif (row, column) == boss_coordinates:
+                row_display += " 帝 "
+            else:
+                row_display += " . "
+        print(row_display)
+
+
 
