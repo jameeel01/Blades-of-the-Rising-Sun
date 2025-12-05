@@ -2,9 +2,11 @@ import random
 
 
 def execute_challenge(character):
-    challenge_type = random.choice(
-        ["combat", "riddle", "shrine", "moral"]
-    )
+    challenge_type = random.choice([
+        "combat","riddle","shrine","moral",
+        "ambush","traveler","gamble","storm","merchant",
+        "healer","duel"
+    ])
 
     if challenge_type == "combat":
         combat_challenge(character)
@@ -12,8 +14,24 @@ def execute_challenge(character):
         riddle_challenge(character)
     elif challenge_type == "shrine":
         shrine_challenge(character)
-    else:
+    elif challenge_type == "moral":
         moral_challenge(character)
+    elif challenge_type == "ambush":
+        ambush_challenge(character)
+    elif challenge_type == "traveler":
+        traveler_challenge(character)
+    elif challenge_type == "gamble":
+        gamble_challenge(character)
+    elif challenge_type == "storm":
+        storm_challenge(character)
+    elif challenge_type == "merchant":
+        merchant_challenge(character)
+    elif challenge_type == "healer":
+        healer_challenge(character)
+    elif challenge_type == "duel":
+        duel_challenge(character)
+
+
 
 def combat_challenge(character):
     foes = ["lost child", "rogue samurai", "wild boar", "mountain thief", "seductive ninja"]
@@ -127,6 +145,69 @@ def moral_challenge(character):
         print("You give your food and starve for the rest of the day. You lose 2 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
+def ambush_challenge(character):
+    print("\nBandits leap from the trees!")
+    damage = random.randint(2,4)
+    character["hp"] -= damage
+    print(f"You escape but lose {damage} HP.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def traveler_challenge(character):
+    print("\nA lost traveler asks for protection.")
+    print("[1] Help")
+    print("[2] Ignore")
+    choice = input("Your choice: ").strip()
+    while choice not in ["1","2"]:
+        choice = input("Enter 1 or 2: ").strip()
+    if choice == "1":
+        character["experience"] += 1
+        print("You guide them safely. You gain 1 experience.")
+        print(f"XP: {character['experience']}")
+
+def gamble_challenge(character):
+    print("\nA dice gambler challenges you.")
+    roll = random.randint(1,10)
+    if roll >= 6:
+        character["experience"] += 1
+        print("You win the gamble. You gain 1 experience.")
+    else:
+        character["hp"] -= 2
+        print("You lose and take 2 HP damage.")
+        print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def storm_challenge(character):
+    print("\nA violent storm batters you.")
+    character["hp"] -= 1
+    print("You lose 1 HP.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def merchant_challenge(character):
+    print("\nA merchant overcharges you for supplies.")
+    character["hp"] += 1 if character["hp"] < character["max_hp"] else 0
+    print("You recover 1 HP.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def healer_challenge(character):
+    print("\nA wandering healer treats your wounds.")
+    heal = 2
+    character["hp"] = min(character["hp"] + heal, character["max_hp"])
+    print(f"You gain {heal} HP.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def duel_challenge(character):
+    print("\nA warrior challenges you to a duel.")
+    if random.randint(1,10) >= 6:
+        character["experience"] += 2
+        print("You win the duel! You gain 2 experience.")
+        print(f"XP: {character['experience']}")
+    else:
+        character["hp"] -= 3
+        print("You are wounded in the duel. You lose 3 HP.")
+        print(f"HP: {character['hp']}/{character['max_hp']}")
+
+
+
+
 def final_boss_fight(character):
     if character["path"] == "ronin":
         boss = "the Emperor"
@@ -194,7 +275,7 @@ def main():
     }
 
 
-    final_boss_fight(test_character)
+    duel_challenge(test_character)
 
 
 if __name__ == "__main__":
