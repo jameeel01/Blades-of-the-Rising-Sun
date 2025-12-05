@@ -5,7 +5,10 @@ def execute_challenge(character):
     challenge_type = random.choice([
         "combat","riddle","shrine","moral",
         "ambush","traveler","gamble","storm","merchant",
-        "healer","duel"
+        "healer","duel","trap","spirit","feast",
+        "thief","boar_charge","archer","bridge",
+        "fire","blessing","curse","training",
+        "pilgrim","assassin", "sacrifice"
     ])
 
     if challenge_type == "combat":
@@ -30,7 +33,34 @@ def execute_challenge(character):
         healer_challenge(character)
     elif challenge_type == "duel":
         duel_challenge(character)
-
+    elif challenge_type == "trap":
+        trap_challenge(character)
+    elif challenge_type == "spirit":
+        spirit_challenge(character)
+    elif challenge_type == "feast":
+        feast_challenge(character)
+    elif challenge_type == "thief":
+        thief_challenge(character)
+    elif challenge_type == "boar_charge":
+        boar_charge_challenge(character)
+    elif challenge_type == "archer":
+        archer_challenge(character)
+    elif challenge_type == "bridge":
+        bridge_challenge(character)
+    elif challenge_type == "fire":
+        fire_challenge(character)
+    elif challenge_type == "blessing":
+        blessing_challenge(character)
+    elif challenge_type == "curse":
+        curse_challenge(character)
+    elif challenge_type == "training":
+        training_challenge(character)
+    elif challenge_type == "pilgrim":
+        pilgrim_challenge(character)
+    elif challenge_type == "assassin":
+        assassin_challenge(character)
+    else:
+        sacrifice_challenge(character)
 
 
 def combat_challenge(character):
@@ -205,8 +235,109 @@ def duel_challenge(character):
         print("You are wounded in the duel. You lose 3 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
+def trap_challenge(character):
+    print("\nYou step into a hidden trap.")
+    character["hp"] -= 2
+    print("You lose 2 HP.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
 
+def spirit_challenge(character):
+    print("\nA restless spirit appears.")
+    if random.randint(1,10) >= 5:
+        character["experience"] += 1
+        print("The spirit blesses you. You gain 1 experience.")
+        print(f"XP: {character['experience']}")
+    else:
+        character["hp"] -= 2
+        print("The spirit drains your life. You lose 2 HP.")
+        print(f"HP: {character['hp']}/{character['max_hp']}")
 
+def feast_challenge(character):
+    print("\nA village offers you a feast.")
+    character["hp"] = min(character["hp"] + 3, character["max_hp"])
+    print("You recover 3 HP.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def thief_challenge(character):
+    print("\nA thief steals from you in the night.")
+    character["experience"] -= 1
+    print("You lose 1 experience.")
+    print(f"XP: {character['experience']}")
+
+def boar_charge_challenge(character):
+    print("\nA wild boar charges!")
+    damage = random.randint(2,4)
+    character["hp"] -= damage
+    print(f"You take {damage} HP damage.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def archer_challenge(character):
+    print("\nAn archer fires from the hills.")
+    character["hp"] -= 2
+    print("You lose 2 HP.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def bridge_challenge(character):
+    print("\nA broken bridge blocks your path.")
+    if random.randint(1,10) >= 5:
+        print("You cross safely.")
+    else:
+        character["hp"] -= 2
+        print("You fall and lose 2 HP.")
+        print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def fire_challenge(character):
+    print("\nA sudden fire engulfs the path.")
+    character["hp"] -= 3
+    print("You lose 3 HP.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def blessing_challenge(character):
+    print("\nA monk blesses your journey.")
+    character["experience"] += 1
+    print("You gain 1 XP.")
+    print(f"XP: {character['experience']}")
+
+def curse_challenge(character):
+    print("\nA dark curse weakens you.")
+    character["hp"] -= 2
+    print("You lose 2 HP.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def training_challenge(character):
+    print("\nA veteran trains you briefly.")
+    character["experience"] += 2
+    print("You gain 2 experience.")
+    print(f"XP: {character['experience']}")
+
+def pilgrim_challenge(character):
+    print("\nA pilgrim shares wisdom.")
+    character["experience"] += 1
+    print("You gain 1 experience.")
+    print(f"XP: {character['experience']}")
+
+def assassin_challenge(character):
+    print("\nAn assassin strikes from the shadows!")
+    damage = random.randint(3,5)
+    character["hp"] -= damage
+    print(f"You lose {damage} HP.")
+    print(f"HP: {character['hp']}/{character['max_hp']}")
+
+def sacrifice_challenge(character):
+    print("\nA shrine demands sacrifice.")
+    print("[1] Offer blood")
+    print("[2] Refuse")
+    choice = input("Your choice: ").strip()
+    while choice not in ["1","2"]:
+        choice = input("Enter 1 or 2: ").strip()
+    if choice == "1":
+        character["hp"] -= 2
+        character["experience"] += 2
+        print("You trade blood for power. You lose 2 HP but gain 2 experience.")
+        print(f"HP: {character['hp']}/{character['max_hp']}")
+        print(f"XP: {character['experience']}")
+    else:
+        print("You run away and your ancestors keep you safe.")
 
 def final_boss_fight(character):
     if character["path"] == "ronin":
@@ -275,7 +406,7 @@ def main():
     }
 
 
-    duel_challenge(test_character)
+    sacrifice_challenge(test_character)
 
 
 if __name__ == "__main__":
