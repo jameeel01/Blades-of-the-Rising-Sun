@@ -107,7 +107,8 @@ def combat_challenge(character):
 
         elif choice == "3":
             if random.randint(1, 10) >= 4:
-                type_text_slowly("You are being watched by the locals and can't run!")
+                type_text_slowly(f"You are being watched by the locals and can't run! The {enemy} strikes you!")
+                character["hp"] -= 1
             else:
                 type_text_slowly("You cover your face and flee!")
                 break
@@ -200,7 +201,7 @@ def traveler_challenge(character):
     if choice == "1":
         character["experience"] += 1
         type_text_slowly("You guide them safely. You gain 1 experience.")
-        print(f"XP: {character['experience']}")
+        print(f"Experience: {character['experience']}")
 
 def gamble_challenge(character):
     type_text_slowly("\nA dice gambler challenges you.")
@@ -237,7 +238,7 @@ def duel_challenge(character):
     if random.randint(1,10) >= 6:
         character["experience"] += 2
         type_text_slowly("You win the duel! You gain 2 experience.")
-        print(f"XP: {character['experience']}")
+        print(f"Experience: {character['experience']}")
     else:
         character["hp"] -= 3
         type_text_slowly("You are wounded in the duel. You lose 3 HP.")
@@ -254,7 +255,7 @@ def spirit_challenge(character):
     if random.randint(1,10) >= 5:
         character["experience"] += 1
         type_text_slowly("The spirit blesses you. You gain 1 experience.")
-        print(f"XP: {character['experience']}")
+        print(f"Experience: {character['experience']}")
     else:
         character["hp"] -= 2
         type_text_slowly("The spirit drains your life. You lose 2 HP.")
@@ -270,7 +271,7 @@ def thief_challenge(character):
     type_text_slowly("\nA thief steals from you in the night.")
     character["experience"] -= 1
     type_text_slowly("You lose 1 experience.")
-    print(f"XP: {character['experience']}")
+    print(f"Experience: {character['experience']}")
 
 def boar_charge_challenge(character):
     type_text_slowly("\nA wild boar charges!")
@@ -304,7 +305,7 @@ def blessing_challenge(character):
     type_text_slowly("\nA monk blesses your journey.")
     character["experience"] += 1
     type_text_slowly("You gain 1 experience.")
-    print(f"XP: {character['experience']}")
+    print(f"Experience: {character['experience']}")
 
 def curse_challenge(character):
     type_text_slowly("\nA dark curse weakens you.")
@@ -316,13 +317,13 @@ def training_challenge(character):
     type_text_slowly("\nA veteran trains you briefly.")
     character["experience"] += 2
     type_text_slowly("You gain 2 experience.")
-    print(f"XP: {character['experience']}")
+    print(f"Experience: {character['experience']}")
 
 def pilgrim_challenge(character):
     type_text_slowly("\nA pilgrim shares wisdom.")
     character["experience"] += 1
     type_text_slowly("You gain 1 experience.")
-    print(f"XP: {character['experience']}")
+    print(f"Experience: {character['experience']}")
 
 def assassin_challenge(character):
     type_text_slowly("\nAn assassin strikes from the shadows!")
@@ -343,7 +344,7 @@ def sacrifice_challenge(character):
         character["experience"] += 2
         type_text_slowly("You trade blood for power. You lose 2 HP but gain 2 experience.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
-        print(f"XP: {character['experience']}")
+        print(f"Experience: {character['experience']}")
     else:
         type_text_slowly("You run away and your ancestors keep you safe.")
 
@@ -391,7 +392,7 @@ def final_boss_fight(character):
             if random.randint(1, 10) >= 6:
                 damage = 7 + (character["level"] * 3)
                 boss_hp -= damage
-                type_text_slowly(f"Your all-out strike deals 7 damage. {boss} HP: {boss_hp}")
+                type_text_slowly(f"Your all-out strike deals {damage} damage. {boss} HP: {boss_hp}")
             else:
                 character["hp"] -= 5
                 type_text_slowly("Your all-out strike fails. You take 5 damage.")
