@@ -1,3 +1,13 @@
+import time
+import sys
+
+def type_text_slowly(text, delay=0.02):
+    for character in str(text):
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(delay)
+    sys.stdout.write("\n")
+
 def make_character(player_name, path):
     return {
         "name": player_name,
@@ -31,7 +41,7 @@ def execute_level_up(character):
     character["attack_power"] += 1
     character["hp"] = character["max_hp"]
 
-    print(
+    type_text_slowly(
         f"\nLevel Up! You are now level {character['level']}."
         f" Max HP: {character['max_hp']}, Attack: {character['attack_power']}\n"
     )
