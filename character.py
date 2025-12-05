@@ -21,7 +21,7 @@ def make_character(player_name, path):
         "experience": 0,
         "attack_power": 3,
         "bond_with_Ryūichi": 0,
-        "morality": 0,
+        "honor": 0,
         "betrayal": False
     }
 
