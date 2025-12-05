@@ -1,3 +1,13 @@
+import time
+import sys
+
+def type_text_slowly(text, delay=0.02):
+    for character in str(text):
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(delay)
+    sys.stdout.write("\n")
+
 def get_user_choice():
     """
     Ask for a direction choice (1–4) and return it as an integer.
@@ -7,7 +17,7 @@ def get_user_choice():
     :return: an integer representing the chosen direction (1 = North, 2 = South, 3 = East, 4 = West)
     """
     while True:
-        print("\nWhich direction would you like to go? Please type one of the corresponding numbers:")
+        type_text_slowly("\nWhich direction would you like to go? Please type one of the corresponding numbers:")
         print("[1] North")
         print("[2] South")
         print("[3] East")
