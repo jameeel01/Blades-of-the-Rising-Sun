@@ -26,12 +26,7 @@ def print_intro_story(character):
         )
         type_text_slowly("Ryūichi remained loyal to the Emperor.\n")
 
-    type_text_slowly(
-        f"As children, {character['name']} and Ryūichi trained together under a fallen master."
-    )
-    type_text_slowly("They swore an oath beneath the cherry blossoms to protect one another.\n")
 
-    type_text_slowly("Now your journey begins...\n")
 
 
 def print_death_screen(character):
@@ -64,18 +59,53 @@ def print_final_duel_banner(boss_name):
     print(f"You face {boss_name}.\n")
 
 def choose_path():
+    type_text_slowly("\nThe rain falls softly on the village of your childhood.")
+    type_text_slowly("You stand beneath the eaves of a ruined shrine, armor wet, blade heavy at your side.")
+    type_text_slowly("Beside you stands Ryūichi — your brother in battle since youth.\n")
+
+    type_text_slowly("Together, you trained under the same master.")
+    type_text_slowly("Together, you survived your first war.")
+    type_text_slowly("And together, you now stand at the edge of a divided future.\n")
+
+    type_text_slowly("Ryūichi turns to you, rain tracing lines down his hardened face.")
+    type_text_slowly("\"The Emperor tightens his grip on the land,\" he says quietly.")
+    type_text_slowly("\"Order is coming... whether through law — or blood.\"")
+    type_text_slowly("\"Tonight, we choose who we become.\"\n")
+
+    type_text_slowly("He steps closer and holds his hand out.")
+    type_text_slowly("\"Stand with me,\" he says.")
+    type_text_slowly("\"Not as soldiers. Not as weapons.\"")
+    type_text_slowly("\"But as brothers.\"\n")
+
     while True:
-        print("Choose your path:\n")
-        print("[1] Samurai:")
-        type_text_slowly("    Serve the Emperor with honor and law.")
-        type_text_slowly("    You fight for order, tradition, and the stability of the realm.\n")
-        print("[2] Ronin:")
-        type_text_slowly("    A masterless warrior betrayed by the throne.")
-        type_text_slowly("    You fight from the shadows to tear down the corrupt empire.\n")
+        type_text_slowly("Choose your path:\n")
+
+        print("[1] Samurai — Swear loyalty to the Emperor")
+        type_text_slowly("    You will wear the symbol of the throne.")
+        type_text_slowly("    You will fight for law, order, and the stability of the realm.")
+        type_text_slowly("    Even if that means standing against your own past.\n")
+
+        print("[2] Ronin — Walk the shadowed road with Ryūichi")
+        type_text_slowly("    You will become an enemy of the state.")
+        type_text_slowly("    You will strike from the dark to tear down a broken empire.")
+        type_text_slowly("    Even if it costs you everything.\n")
 
         choice = input("Enter 1 or 2: ").strip()
 
         if choice == "1":
+            type_text_slowly("\nYou lower your head.")
+            type_text_slowly("\"The throne must be protected,\" you say.")
+            type_text_slowly("\"Even from itself.\"")
+            type_text_slowly("\nRyūichi exhales slowly.")
+            type_text_slowly("\"Then this is where our paths split, my friend.\"")
+            type_text_slowly("\"May your blade never waver.\"\n")
             return "samurai"
+
         if choice == "2":
+            type_text_slowly("\nYou tighten your grip on your blade.")
+            type_text_slowly("\"The Empire is rotting,\" you whisper.")
+            type_text_slowly("\"And I will not die defending a lie.\"")
+            type_text_slowly("\nRyūichi smiles for the first time in years.")
+            type_text_slowly("\"Then we walk as ghosts,\" he says.")
+            type_text_slowly("\"And we reshape history with steel.\"\n")
             return "ronin"
