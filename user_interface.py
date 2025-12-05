@@ -40,14 +40,27 @@ def print_victory_screen(character):
     banner = pyfiglet.figlet_format("VICTORY", font="big")
     print(banner)
 
-    if character["path"] == "ronin":
-        type_text_slowly("The Emperor lies defeated.")
-        type_text_slowly("Ryūichi collapses beside you, smiling at last.")
-        type_text_slowly("Peace comes at the cost of blood.\n")
+    if character["betrayal"]:
+        type_text_slowly("Ryūichi lies motionless in the dust.")
+        type_text_slowly("His eyes never forgave you.")
+        type_text_slowly("Victory tastes like ash in your mouth.\n")
+    elif character["bond_with_Ryūichi"] >= 4:
+        if character["path"] == "ronin":
+            type_text_slowly("The Emperor lies defeated.")
+            type_text_slowly("Ryūichi grips your arm tightly as the palace burns.")
+            type_text_slowly("Two brothers standing at the end of an empire.\n")
+        else:
+            type_text_slowly("Ryūichi kneels before you, wounded but alive.")
+            type_text_slowly("\"We survived,\" he whispers. \"That is enough.\"\n")
     else:
-        type_text_slowly("Ryūichi falls at your feet.")
-        type_text_slowly("The Emperor declares the land stable.")
-        type_text_slowly("But your heart feels heavy with loss.\n")
+        if character["path"] == "ronin":
+            type_text_slowly("The Emperor lies defeated.")
+            type_text_slowly("Ryūichi disappears into the smoke without a word.")
+            type_text_slowly("Some victories are won alone.\n")
+        else:
+            type_text_slowly("Ryūichi falls at your feet.")
+            type_text_slowly("The Emperor declares the land stable.")
+            type_text_slowly("But your heart feels heavy with loss.\n")
 
     type_text_slowly(f"{character['name']} stands beneath the rising sun.")
     type_text_slowly("Your legend is written in steel and sacrifice.\n")
@@ -57,6 +70,17 @@ def print_final_duel_banner(boss_name):
     banner = pyfiglet.figlet_format("FINAL DUEL", font="slant")
     print(banner)
     print(f"You face {boss_name}.\n")
+
+def final_duel_intro(character):
+    if character["betrayal"]:
+        type_text_slowly("\nRyūichi steps forward with cold eyes.")
+        type_text_slowly("\"You chose chaos over brotherhood.\"")
+    elif character["path"] == "ronin":
+        type_text_slowly("\nRyūichi stands beside you at the gates of the palace.")
+        type_text_slowly("\"We finish this together...or not at all.\"")
+    else:
+        type_text_slowly("\nRyūichi blocks your path.")
+        type_text_slowly("\"You wear the Emperor’s chains now.\"")
 
 def choose_path():
     type_text_slowly("\nThe rain falls softly on the village of your childhood.")
