@@ -41,10 +41,22 @@ def execute_level_up(character):
 
     character["level"] += 1
     character["max_hp"] += 5
-    character["attack_power"] += 1
+    character["attack_power"] += 3
     character["hp"] = character["max_hp"]
 
     type_text_slowly(
         f"\nLevel Up! You are now level {character['level']}."
         f" Max HP: {character['max_hp']}, Attack: {character['attack_power']}\n"
     )
+
+    if character["level"] == 3:
+        type_text_slowly("\nA strange stillness settles around you...")
+        type_text_slowly("Your body feels stronger. Your blade feels lighter.")
+        type_text_slowly("You know, without doubt — you are ready.\n")
+
+        if character["path"] == "ronin":
+            type_text_slowly("The road to the palace opens before you.")
+            type_text_slowly("The Emperor's fate now lies within your reach.\n")
+        else:
+            type_text_slowly("The path to the palace is finally clear.")
+            type_text_slowly("The Emperor will soon need your blade's protection.\n")
