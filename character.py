@@ -23,7 +23,8 @@ def make_character(player_name, path):
         "attack_power": 3,
         "bond_with_Ryūichi": 0,
         "honor": 0,
-        "betrayal": False
+        "betrayal": False,
+        "challenge_stack": []
     }
 
 def is_alive(character):

@@ -24,26 +24,27 @@ def type_text_slowly(text, delay=0.04):
         time.sleep(delay)
     sys.stdout.write("\n")
 
-def execute_challenge(character):
-    interactive_challenge = [
+def challenge_stack(character):
+    challenge = [
         "combat", "riddle", "moral", "traveler",
         "duel", "sacrifice", "gamble",
         "hostage", "wounded_soldier",
         "execution", "duel_of_honor",
-        "burning_village"
-    ]
-    passive_challenge = [
+        "burning_village", "shrine",
         "ambush", "storm", "merchant", "healer",
         "spirit", "feast", "thief",
         "boar_charge", "bridge", "fire",
         "blessing", "training",
-        "pilgrim", "assassin", "shrine"
+        "pilgrim", "assassin"
     ]
+    character["challenge_stack"] = challenge
+    random.shuffle(character["challenge_stack"])
 
-    if random.randint(1, 10) <= 7:
-        challenge_type = random.choice(interactive_challenge)
-    else:
-        challenge_type = random.choice(passive_challenge)
+def execute_challenge(character):
+    if len(character["challenge_stack"]) == 0:
+        challenge_stack(character)
+
+    challenge_type = character["challenge_stack"].pop()
 
     if challenge_type == "combat":
         combat_challenge(character)
@@ -116,21 +117,22 @@ def combat_challenge(character):
         while choice not in ["1", "2", "3"]:
             choice = input("Invalid choice. Enter 1, 2, or 3: ").strip()
 
-        player_roll = random.randint(1, 10) + character["attack_power"]
+        player_roll = random.randint(1, 10)
         enemy_roll = random.randint(1, 10)
 
         if choice == "1":
             if player_roll >= enemy_roll:
-                enemy_hp -= 3
-                type_text_slowly(f"\nYou strike the {enemy} for 3 damage!")
+                enemy_hp -= character["attack_power"]
+                type_text_slowly(f"\nYou strike the {enemy} for {character["attack_power"]} damage!")
             else:
-                character["hp"] -= 3
-                type_text_slowly(f"\nThe {enemy} hits you for 3 damage!")
+                damage = 2 * character["level"]
+                character["hp"] -= damage
+                type_text_slowly(f"\nThe {enemy} hits you for {damage} damage!")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "2":
-            character["hp"] -= 1
-            type_text_slowly("\nYou defend but still take 1 damage.")
+            character["hp"] += 2 * character["level"]
+            type_text_slowly(f"\nYou defend against the {enemy} and drink a healing potion")
             print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "3":
@@ -181,7 +183,7 @@ def shrine_challenge(character):
         choice = input("Invalid choice. Enter 1 or 2: ").strip()
 
     if choice == "1":
-        heal = random.randint(1, 3)
+        heal = 1 * character["level"]
         if character["hp"] == character["max_hp"]:
             type_text_slowly("\nThis shrine's water tastes like moldy feet and old coins.")
         else:
@@ -280,7 +282,7 @@ def merchant_challenge(character):
 
 def healer_challenge(character):
     type_text_slowly("\nA wandering healer treats your wounds.")
-    heal = 2
+    heal = 3
     character["hp"] = min(character["hp"] + heal, character["max_hp"])
     type_text_slowly(f"\nYou gain {heal} HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
@@ -579,34 +581,43 @@ def boss_fight(character, boss_name):
         while choice not in ["1", "2", "3"]:
             choice = input("Invalid choice. Enter 1, 2, or 3: ").strip()
 
-        player_roll = random.randint(1, 10) + character["attack_power"]
-        boss_roll = random.randint(1, 10) + 4
+        player_roll = random.randint(1, 5)
+        boss_roll = random.randint(1, 10)
 
         if choice == "1":
             if player_roll >= boss_roll:
-                damage = 4 + (character["level"] * 2)
+                damage = character["attack_power"]
                 boss_hp -= damage
                 type_text_slowly(f"You strike for {damage} damage.")
             else:
-                damage = 4 + character["level"]
+                damage = 3 * character["level"]
                 character["hp"] -= damage
                 type_text_slowly(f"You are struck for {damage} damage.")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "2":
-            reduced = 1 + character["level"]
-            character["hp"] -= reduced
-            type_text_slowly(f"You block but take {reduced} damage.")
-            print(f"HP: {character['hp']}/{character['max_hp']}")
+            if random.randint(1, 10) >= 3:
+                heal = 5
+                character["hp"] += heal
+                type_text_slowly(f"You block and drink a health potion. You heal for {heal} HP")
+                print(f"HP: {character['hp']}/{character['max_hp']}")
+            else:
+                damage = random.randint(1, 5)
+                character["hp"] -= damage
+                type_text_slowly(f"You try to block {boss_name}'s incoming attack.")
+                type_text_slowly(f"You feel pain under {boss_name}'s strength.")
+                type_text_slowly(f"You lose {damage}HP.")
+                print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "3":
             if random.randint(1, 10) >= 6:
-                damage = 7 + (character["level"] * 3)
+                damage = character["attack_power"] * 2
                 boss_hp -= damage
                 type_text_slowly(f"Your all-out strike deals {damage} damage.")
             else:
-                character["hp"] -= 5
-                type_text_slowly("Your all-out strike fails. You take 5 damage.")
+                damage = 4 * character["level"]
+                character["hp"] -= damage
+                type_text_slowly(f"Your all-out strike gets parried. You take {damage} damage.")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
     return character["hp"] > 0
 
@@ -615,7 +626,7 @@ def final_boss_story(character):
         boss = character["friend_name"]
 
         final_boss_intro_samurai()
-        print(print_final_duel_banner())
+        print_final_duel_banner()
         result = boss_fight(character, boss)
 
         if result:

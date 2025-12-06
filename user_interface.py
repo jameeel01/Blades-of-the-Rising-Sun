@@ -199,8 +199,8 @@ def ryuichi_flashback(character):
         ]
     else:
         flashbacks = [
-            "You remember the two of you training in silence at dawn.\n",
-            "You remember fighting side by side without speaking.\n",
+            "You remember training with Ryūichi from dawn to dusk.\n",
+            "You remember fighting side by side with Ryūichi during the war.\n",
             "You remember Ryūichi dragging you from the battlefield while bleeding.\n"
         ]
 

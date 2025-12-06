@@ -16,6 +16,7 @@ from movement import (
     move_character
 )
 from challenges import (
+    challenge_stack,
     execute_challenge,
     final_boss_story,
 )
@@ -39,6 +40,7 @@ def game():
 
     game_board = make_board(10, 10)
     player_character = make_character(player_name, player_path)
+    challenge_stack(player_character)
 
     while True:
         skip_tutorial = input("Skip tutorial? (Y/N): ").strip().lower()
