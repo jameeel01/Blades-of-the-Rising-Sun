@@ -25,6 +25,7 @@ from user_interface import (
     print_death_screen,
     print_victory_screen,
     choose_path,
+    determine_betrayal
 )
 
 def game():
@@ -66,6 +67,7 @@ def game():
     if not is_alive(player_character):
         print_death_screen(player_character)
     else:
+        determine_betrayal(player_character)
         if final_boss_fight(player_character):
             print_victory_screen(player_character)
         else:
