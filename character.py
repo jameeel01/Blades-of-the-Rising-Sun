@@ -1,5 +1,6 @@
 import time
 import sys
+import pyfiglet
 
 def type_text_slowly(text, delay=0.02):
     for character in str(text):
@@ -16,7 +17,7 @@ def make_character(player_name, path):
         "x-coordinate": 0,
         "y-coordinate": 0,
         "hp": 20,
-        "max_hp": 30,
+        "max_hp": 20,
         "level": 1,
         "experience": 0,
         "attack_power": 3,
@@ -44,8 +45,10 @@ def execute_level_up(character):
     character["attack_power"] += 3
     character["hp"] = character["max_hp"]
 
+    result = pyfiglet.figlet_format("LEVEL UP!", font="SLANT")
+    print(result)
     type_text_slowly(
-        f"\nLevel Up! You are now level {character['level']}."
+        f"\n You are now level {character['level']}."
         f" Max HP: {character['max_hp']}, Attack: {character['attack_power']}\n"
     )
 

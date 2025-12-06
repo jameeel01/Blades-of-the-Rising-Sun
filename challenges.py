@@ -1,6 +1,18 @@
 import random
 import time
 import sys
+from user_interface import (
+    final_boss_intro_samurai,
+    final_boss_outro_samurai,
+    final_boss_intro_ronin,
+    emperor_death_scene,
+    betrayal_confrontation_intro,
+    betrayal_spared_scene,
+    betrayal_duel_scene,
+    rebuild_scene,
+    abandonment_scene,
+    print_final_duel_banner
+)
 
 def ryuichi_present(character):
     return character["path"] == "ronin"
@@ -598,120 +610,36 @@ def boss_fight(character, boss_name):
                 print(f"HP: {character['hp']}/{character['max_hp']}")
     return character["hp"] > 0
 
-def final_boss_fight(character):
+def final_boss_story(character):
     if character["path"] == "samurai":
         boss = character["friend_name"]
 
-        type_text_slowly("\nThe wind dies as you step into the Emperor's palace.")
-        type_text_slowly("Ash drifts slowly through the air like falling snow.")
-        type_text_slowly("You bow and greet the Emperor.\n")
-
-        type_text_slowly("The Emperor studies you with tired, calculating eyes.")
-        type_text_slowly("\"The head of the Ronin has eluded my armies for months,\" he says.")
-        type_text_slowly("\"End this rebellion. Bring me his head.\"")
-        type_text_slowly("You feel the weight of the command settle into your chest.\n")
-
-        type_text_slowly("\"Your Majesty I—")
-        print("The palace doors explode inward with the scream of splintering wood.\n")
-
-        type_text_slowly("You can't believe your eyes.")
-        type_text_slowly("Ryūichi stands before you as the Leader of Ronins.")
-        type_text_slowly("His armor is cracked. His blade is stained dark.\n")
-
-        type_text_slowly("\"So this is where our blades finally meet,\" he says quietly.")
-        type_text_slowly("\"We are enemies forged by the same war.\"\n")
-
-        type_text_slowly("You raise your weapon.")
-        type_text_slowly("Your hands do not tremble — but your heart does.\n")
-
-        type_text_slowly("\"I never wanted this,\" Ryūichi says.")
-        type_text_slowly("\"But destiny has never cared for what we want.\"\n")
-
+        final_boss_intro_samurai()
+        print(print_final_duel_banner())
         result = boss_fight(character, boss)
 
         if result:
-            type_text_slowly("\nRyūichi staggers back, dropping to one knee.")
-            type_text_slowly("His blade slips from his fingers and clatters across the stone.\n")
-
-            type_text_slowly("He looks up at you one last time.")
-            type_text_slowly("\"Finish it,\" he whispers.")
-            type_text_slowly("\"Let the world remember only one of us.\"\n")
-
-            character["force_ryuichi_death"] = True
+            final_boss_outro_samurai()
         return result
     else:
         boss = "the Emperor"
-        type_text_slowly("\nYou storm the palace with Ryūichi at your side.")
-
+        final_boss_intro_ronin()
+        print_final_duel_banner()
         emperor_defeated = boss_fight(character, boss)
 
         if not emperor_defeated:
             return False
-
-        type_text_slowly("\nThe Emperor collapses to his knees.")
-        type_text_slowly("Blood spills across the marble floor of the throne room.")
-        type_text_slowly("\"So... this is the end,\" he whispers.")
-        type_text_slowly("Your blade flashes once more.")
-        type_text_slowly("The Emperor of the Rising Sun is slain.\n")
+        emperor_death_scene()
 
         if character["betrayal"]:
-            type_text_slowly("\nYou feel a presence shift behind you.")
-            type_text_slowly("Footsteps whisper across the stone.")
-            type_text_slowly("Steel leaves its sheath.\n")
-
-            type_text_slowly("Ryūichi slowly raises his blade behind you.")
-            type_text_slowly("\"Your choices damned this land,\" he says, voice trembling.")
-            type_text_slowly("\"Every village. Every grave.\"")
-
-            type_text_slowly("You do not turn.")
-            type_text_slowly("You already know what comes next.\n")
-
+            betrayal_confrontation_intro()
             if character["bond_with_Ryūichi"] >= 3:
-                type_text_slowly("Your grip loosens.")
-                type_text_slowly("Your blade lowers to the stone.")
-                type_text_slowly("\"Then strike,\" you whisper. \"If that is the end you seek.\"")
-
-                type_text_slowly("Ryūichi’s blade trembles in the air.")
-                type_text_slowly("His teeth grind together.")
-                type_text_slowly("At last, he turns away.\n")
-
-                type_text_slowly("\"I cannot kill the brother I once loved,\" he mutters.")
-                type_text_slowly("His footsteps fade into the smoke.")
-
-                character["spared_ryuichi"] = True
+                betrayal_spared_scene()
             else:
-                type_text_slowly("Your blades rise at the same time.")
-                type_text_slowly("There are no words left to save you now.\n")
-
-                type_text_slowly("Steel clashes one last time between brothers.")
-                type_text_slowly("The sound echoes through the ruins like a breaking heart.")
-
-                character["killed_ryuichi"] = True
-
+                betrayal_duel_scene()
         else:
             if character["bond_with_Ryūichi"] >= 3:
-                type_text_slowly("\nThe battlefield falls silent.")
-                type_text_slowly("Smoke drifts through shattered halls.")
-                type_text_slowly("You stand among the dead — breathing.\n")
-
-                type_text_slowly("Ryūichi steps beside you, bloodied but alive.")
-                type_text_slowly("\"The Empire is broken,\" he says.")
-                type_text_slowly("\"But perhaps… we can shape what rises from its ashes.\"")
-
-                type_text_slowly("He extends his hand.")
-                type_text_slowly("Not as a warrior.")
-                type_text_slowly("But as your brother once more.\n")
-
-                character["rebuild_empire"] = True
+                rebuild_scene()
             else:
-                type_text_slowly("\nYou stand alone upon the ruins of the throne.")
-                type_text_slowly("The Empire is yours — but the victory feels hollow.\n")
-
-                type_text_slowly("Ryūichi watches you from a distance.")
-                type_text_slowly("\"Power has changed you,\" he says quietly.")
-                type_text_slowly("\"I will not walk beside another tyrant.\"")
-
-                type_text_slowly("Without another word, he turns and disappears into the ruin.")
-
-                character["abandoned_by_ryuichi"] = True
+                abandonment_scene()
         return True

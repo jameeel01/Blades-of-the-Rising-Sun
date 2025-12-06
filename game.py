@@ -13,11 +13,11 @@ from board import (
 from movement import (
     get_user_choice,
     validate_move,
-    move_character, type_text_slowly
+    move_character
 )
 from challenges import (
     execute_challenge,
-    final_boss_fight,
+    final_boss_story,
 )
 from user_interface import (
     print_title_screen,
@@ -28,7 +28,7 @@ from user_interface import (
     determine_betrayal,
     ryuichi_flashback,
     explain_game_goal,
-    print_final_duel_banner
+    type_text_slowly
 )
 
 def game():
@@ -50,8 +50,8 @@ def game():
         explain_game_goal(player_character)
     boss_coordinates = (9, 9)
 
-    draw_ascii_map(player_character, boss_coordinates)
     while is_alive(player_character):
+        draw_ascii_map(player_character, boss_coordinates)
         direction_choice = get_user_choice()
         if direction_choice == "quit":
             print("\nYou walk away from destiny...\n")
@@ -70,7 +70,6 @@ def game():
                 type_text_slowly("You feel the Emperor’s presence beyond this point.")
                 type_text_slowly("You must reach Level 3 before entering the Emperor's palace!\n")
                 type_text_slowly("Come back here when you are ready to approach the Emperor.\n")
-                draw_ascii_map(player_character, boss_coordinates)
                 continue
             else:
                 break
@@ -89,14 +88,7 @@ def game():
     else:
         determine_betrayal(player_character)
 
-        if player_character["path"] == "ronin":
-            boss_name = "the Emperor"
-        else:
-            boss_name = player_character["friend_name"]
-
-        print_final_duel_banner(boss_name)
-
-        if final_boss_fight(player_character):
+        if final_boss_story(player_character):
             print_victory_screen(player_character)
         else:
             print_death_screen(player_character)
