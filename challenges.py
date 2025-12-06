@@ -134,7 +134,8 @@ def riddle_challenge(character):
 
     if answer == "2":
         character["experience"] += 1
-        type_text_slowly("Correct. You gain 1 experience.")
+        character["bond_with_Ryūichi"] += 1
+        type_text_slowly("Correct. Ryūichi nods in quiet approval.")
         print(f"Experience: {character['experience']}")
     else:
         character["hp"] -= 2
@@ -199,10 +200,17 @@ def traveler_challenge(character):
     choice = input("Your choice: ").strip()
     while choice not in ["1","2"]:
         choice = input("Enter 1 or 2: ").strip()
+
     if choice == "1":
         character["experience"] += 1
-        type_text_slowly("You guide them safely. You gain 1 experience.")
+        character["honor"] += 1
+        character["bond_with_Ryūichi"] += 1
+        type_text_slowly("You guide them safely. Ryūichi smiles at your compassion.")
         print(f"Experience: {character['experience']}")
+    else:
+        character["honor"] -= 1
+        character["bond_with_Ryūichi"] -= 1
+        type_text_slowly("You turn your back on the helpless traveler. Ryūichi storms off in anger")
 
 def gamble_challenge(character):
     type_text_slowly("\nA dice gambler challenges you.")
@@ -343,11 +351,15 @@ def sacrifice_challenge(character):
     if choice == "1":
         character["hp"] -= 2
         character["experience"] += 2
-        type_text_slowly("You trade blood for power. You lose 2 HP but gain 2 experience.")
+        character["honor"] -= 2
+        character["bond_with_Ryūichi"] -= 1
+        type_text_slowly("Power answers your blood. Ryūichi turns away in silence.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
         print(f"Experience: {character['experience']}")
     else:
-        type_text_slowly("You run away and your ancestors keep you safe.")
+        character["honor"] += 2
+        character["bond_with_Ryūichi"] += 1
+        type_text_slowly("You refuse the dark power. Ryūichi nods with respect.")
 
 def final_boss_fight(character):
     if character["path"] == "ronin":

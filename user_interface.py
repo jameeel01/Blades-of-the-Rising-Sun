@@ -3,7 +3,7 @@ import time
 import sys
 import random
 
-def type_text_slowly(text, delay=0.02):
+def type_text_slowly(text, delay=0.04):
     for character in str(text):
         sys.stdout.write(character)
         sys.stdout.flush()
@@ -27,7 +27,7 @@ def print_intro_story(character):
         type_text_slowly("Ryūichi remained loyal to the Emperor.\n")
 
 def print_death_screen(character):
-    banner = pyfiglet.figlet_format("YOU HAVE FALLEN", font="doom")
+    banner = pyfiglet.figlet_format("YOU HAVE DIED", font="doom")
     print(banner)
     type_text_slowly(f"{character['name']}'s blade falls into the dust.")
     type_text_slowly("The wind carries your story into silence...\n")
@@ -155,6 +155,9 @@ def ryuichi_random_dialogue(character):
     type_text_slowly(f"\nRyūichi: {line}\n")
 
 def determine_betrayal(character):
+    if character["path"] == "samurai":
+        character["betrayal"] = False
+        return
     if character["bond_with_Ryūichi"] < -2 or character["honor"] <= -4:
         character["betrayal"] = True
     else:
