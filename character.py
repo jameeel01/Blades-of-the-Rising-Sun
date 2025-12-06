@@ -15,7 +15,7 @@ def make_character(player_name, path):
         "friend_name": "Ryūichi",
         "x-coordinate": 0,
         "y-coordinate": 0,
-        "hp": 30,
+        "hp": 20,
         "max_hp": 30,
         "level": 1,
         "experience": 0,
@@ -29,9 +29,9 @@ def is_alive(character):
     return character["hp"] > 0
 
 def character_has_leveled(character):
-    if character["level"] == 1 and character["experience"] >= 3:
+    if character["level"] == 1 and character["experience"] >= 5:
         return True
-    if character["level"] == 2 and character["experience"] >= 6:
+    if character["level"] == 2 and character["experience"] >= 10:
         return True
     return False
 

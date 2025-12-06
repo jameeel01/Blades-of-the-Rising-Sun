@@ -24,34 +24,34 @@ def print_intro_story(character):
         type_text_slowly(
             "You chose the lonely road of the Ronin — to fight the throne from the shadows."
         )
-        type_text_slowly("Ryūichi remained loyal to the Emperor.\n")
+        type_text_slowly("You join arms with Ryūichi to take down the Emperor.\n")
 
 def print_death_screen(character):
     banner = pyfiglet.figlet_format("YOU HAVE DIED", font="doom")
     print(banner)
-    type_text_slowly(f"{character['name']}'s blade falls into the dust.")
+    type_text_slowly(f"\n{character['name']}'s blade falls into the dust.")
     type_text_slowly("The wind carries your story into silence...\n")
 
 def print_victory_screen(character):
     if character["betrayal"]:
-        type_text_slowly("Ryūichi lies motionless in the dust.")
+        type_text_slowly("\nRyūichi lies motionless in the dust.")
         type_text_slowly("His eyes never forgave you.")
         type_text_slowly("Victory tastes like ash in your mouth.\n")
     elif character["bond_with_Ryūichi"] >= 4:
         if character["path"] == "ronin":
-            type_text_slowly("The Emperor lies defeated.")
+            type_text_slowly("\nThe Emperor lies defeated.")
             type_text_slowly("Ryūichi grips your arm tightly as the palace burns.")
             type_text_slowly("Two brothers standing at the end of an empire.\n")
         else:
-            type_text_slowly("Ryūichi kneels before you, wounded but alive.")
+            type_text_slowly("\nRyūichi kneels before you, wounded but alive.")
             type_text_slowly("\"We survived,\" he whispers. \"That is enough.\"\n")
     else:
         if character["path"] == "ronin":
-            type_text_slowly("The Emperor lies defeated.")
+            type_text_slowly("\nThe Emperor lies defeated.")
             type_text_slowly("Ryūichi disappears into the smoke without a word.")
             type_text_slowly("Some victories are won alone.\n")
         else:
-            type_text_slowly("Ryūichi falls at your feet.")
+            type_text_slowly("\nRyūichi falls at your feet.")
             type_text_slowly("The Emperor declares the land stable.")
             type_text_slowly("But your heart feels heavy with loss.\n")
 
@@ -62,9 +62,8 @@ def print_victory_screen(character):
     print(banner)
 
 def print_final_duel_banner(boss_name):
-    banner = pyfiglet.figlet_format("FINAL DUEL", font="slant")
+    banner = pyfiglet.figlet_format("\nFINAL DUEL", font="slant")
     print(banner)
-    print(f"You face {boss_name}.\n")
 
 def final_duel_intro(character):
     if character["betrayal"]:

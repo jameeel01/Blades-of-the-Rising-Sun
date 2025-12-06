@@ -8,13 +8,12 @@ from character import (
 from board import (
     make_board,
     describe_current_location,
-    check_if_goal_attained,
     draw_ascii_map
 )
 from movement import (
     get_user_choice,
     validate_move,
-    move_character
+    move_character, type_text_slowly
 )
 from challenges import (
     execute_challenge,
@@ -47,47 +46,49 @@ def game():
             break
         print("Invalid input. Please enter Y or N.")
     if skip_tutorial != "y":
-        if player_character["path"] == "samurai" or "ronin":
-            print_intro_story(player_character)
-            explain_game_goal(player_character)
+        print_intro_story(player_character)
+        explain_game_goal(player_character)
     boss_coordinates = (9, 9)
-    achieved_final_goal = False
 
     draw_ascii_map(player_character, boss_coordinates)
-    while is_alive(player_character) and not achieved_final_goal:
-        draw_ascii_map(player_character, boss_coordinates)
+    while is_alive(player_character):
         direction_choice = get_user_choice()
         if direction_choice == "quit":
             print("\nYou walk away from destiny...\n")
             return
-
-        if validate_move(player_character, direction_choice):
-            move_character(player_character, direction_choice)
-            draw_ascii_map(player_character, boss_coordinates)
-            describe_current_location(game_board, player_character)
-            execute_challenge(player_character)
-            if player_character["hp"] <= 10 and random.randint(1, 3) == 1:
-                ryuichi_flashback(player_character)
-
-            if character_has_leveled(player_character):
-                execute_level_up(player_character)
-
-            if check_if_goal_attained(player_character, boss_coordinates):
-                if player_character["level"] < 3:
-                    print("\nA powerful force blocks your path...")
-                    print("You feel unprepared to face what lies ahead.")
-                    print("You must reach Level 3 before challenging the Emperor!\n")
-                    print("Come back here when you are ready to challenge the Emperor\n")
-                    draw_ascii_map(player_character, boss_coordinates)
-                else:
-                    achieved_final_goal = True
-        else:
+        if not validate_move(player_character, direction_choice):
             print("\nYou cannot go that way.\n")
+            continue
+        move_character(player_character, direction_choice)
+
+        if (player_character["x-coordinate"] == boss_coordinates[0]
+            and player_character["y-coordinate"] == boss_coordinates[1]
+        ):
+            draw_ascii_map(player_character, boss_coordinates)
+            if player_character["level"] < 3:
+                type_text_slowly("\nA powerful force blocks your path...")
+                type_text_slowly("You feel the Emperor’s presence beyond this point.")
+                type_text_slowly("You must reach Level 3 before entering the Emperor's palace!\n")
+                type_text_slowly("Come back here when you are ready to approach the Emperor.\n")
+                draw_ascii_map(player_character, boss_coordinates)
+                continue
+            else:
+                break
+        draw_ascii_map(player_character, boss_coordinates)
+        describe_current_location(game_board, player_character)
+        execute_challenge(player_character)
+
+        if player_character["hp"] <= 15 and random.randint(1, 3) == 1:
+            ryuichi_flashback(player_character)
+
+        if character_has_leveled(player_character):
+            execute_level_up(player_character)
 
     if not is_alive(player_character):
         print_death_screen(player_character)
     else:
         determine_betrayal(player_character)
+
         if player_character["path"] == "ronin":
             boss_name = "the Emperor"
         else:
