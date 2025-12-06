@@ -28,7 +28,7 @@ def execute_challenge(character):
         "pilgrim", "assassin", "shrine"
     ]
 
-    if random.randint(1, 10) <= 6:
+    if random.randint(1, 10) <= 7:
         challenge_type = random.choice(interactive_challenge)
     else:
         challenge_type = random.choice(passive_challenge)
@@ -110,23 +110,23 @@ def combat_challenge(character):
         if choice == "1":
             if player_roll >= enemy_roll:
                 enemy_hp -= 3
-                type_text_slowly(f"You strike the {enemy} for 3 damage!")
+                type_text_slowly(f"\nYou strike the {enemy} for 3 damage!")
             else:
                 character["hp"] -= 3
-                type_text_slowly(f"The {enemy} hits you for 3 damage!")
+                type_text_slowly(f"\nThe {enemy} hits you for 3 damage!")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "2":
             character["hp"] -= 1
-            type_text_slowly("You defend but still take 1 damage.")
+            type_text_slowly("\nYou defend but still take 1 damage.")
             print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "3":
             if random.randint(1, 10) >= 4:
-                type_text_slowly(f"You are being watched by the locals and can't run! The {enemy} strikes you!")
+                type_text_slowly(f"\nYou are being watched by the locals and can't run! The {enemy} strikes you!")
                 character["hp"] -= 1
             else:
-                type_text_slowly("You cover your face and flee!")
+                type_text_slowly("\nYou cover your face and flee!")
                 break
 
     if enemy_hp <= 0:
@@ -152,12 +152,12 @@ def riddle_challenge(character):
         character["experience"] += 1
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] += 1
-            type_text_slowly("Correct. Ryūichi nods in quiet approval.")
+            type_text_slowly("\nCorrect. Ryūichi nods in quiet approval.")
         else:
-            type_text_slowly("Correct. You feel your confidence grow.")
+            type_text_slowly("\nCorrect. You feel your confidence grow.")
     else:
         character["hp"] -= 2
-        type_text_slowly("The monk stabs you for insulting his intelligence. You lose 2 HP.")
+        type_text_slowly("\nThe monk stabs you for insulting his intelligence. You lose 2 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def shrine_challenge(character):
@@ -172,13 +172,13 @@ def shrine_challenge(character):
     if choice == "1":
         heal = random.randint(1, 3)
         if character["hp"] == character["max_hp"]:
-            type_text_slowly("This shrine's water tastes like moldy feet and old coins.")
+            type_text_slowly("\nThis shrine's water tastes like moldy feet and old coins.")
         else:
             character["hp"] = min(character["hp"] + heal, character["max_hp"])
-            type_text_slowly(f"You feel warmth. HP restored by {heal}.")
+            type_text_slowly(f"\nYou feel warmth. HP restored by {heal}.")
             print(f"HP: {character['hp']}/{character['max_hp']}")
     else:
-        print("You bow and walk away.")
+        print("\nYou bow and walk away.")
 
 def moral_challenge(character):
     type_text_slowly("\nA starving thief steals rice from a farmer.")
@@ -194,30 +194,30 @@ def moral_challenge(character):
         character["experience"] += 1
         character["honor"] -= 2
         if ryuichi_present(character):
-            type_text_slowly("You kill the thief. Ryūichi shakes his head in dismay.")
+            type_text_slowly("\nYou kill the thief. Ryūichi shakes his head in dismay.")
         else:
-            type_text_slowly("You carry out the execution without hesitation.")
+            type_text_slowly("\nYou carry out the execution without hesitation.")
     elif choice == "2":
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] += 1
-            type_text_slowly("You spare the thief but give the rice back to the farmer. Ryūichi gives the thief some food.")
+            type_text_slowly("\nYou spare the thief but give the rice back to the farmer. Ryūichi gives the thief some food.")
         else:
-            type_text_slowly("You let the thief flee into the night. The farmer screams at you.")
+            type_text_slowly("\nYou let the thief flee into the night. The farmer screams at you.")
     else:
         character["honor"] += 2
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] += 2
-            type_text_slowly("Ryūichi smiles at your compassion.")
+            type_text_slowly("\nRyūichi smiles at your compassion.")
             type_text_slowly(f"\"We will find dinner elsewhere don't worry {character["name"]}\"")
         else:
-            type_text_slowly("You give your last food away to the thief and walk on in silence.")
+            type_text_slowly("\nYou give your last food away to the thief and walk on in silence.")
     print(f"Experience: {character['experience']}")
 
 def ambush_challenge(character):
     type_text_slowly("\nBandits leap from the trees!")
     damage = random.randint(2,4)
     character["hp"] -= damage
-    type_text_slowly(f"You escape but lose {damage} HP.")
+    type_text_slowly(f"\nYou escape but lose {damage} HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def traveler_challenge(character):
@@ -233,117 +233,117 @@ def traveler_challenge(character):
         character["honor"] += 1
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] += 1
-            type_text_slowly("You give the traveler a few coins. Ryūichi is deeply moved.")
+            type_text_slowly("\nYou give the traveler a few coins. Ryūichi is deeply moved.")
         else:
-            type_text_slowly("You give the traveler a few coins. The traveler bows deeply in gratitude.")
+            type_text_slowly("\nYou give the traveler a few coins. The traveler bows deeply in gratitude.")
     else:
         character["honor"] -= 1
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] -= 1
-            type_text_slowly("You pretend you hear nothing.")
+            type_text_slowly("\nYou pretend you hear nothing.")
             type_text_slowly("Ryūichi gives the traveler a few coins then glares at you in disappointment.")
         else:
-            type_text_slowly("You leave the traveler behind without looking back.")
+            type_text_slowly("Y\nou leave the traveler behind without looking back.")
 
 def gamble_challenge(character):
     type_text_slowly("\nA dice gambler challenges you.")
     roll = random.randint(1,10)
     if roll >= 6:
         character["experience"] += 1
-        type_text_slowly("You win the gamble. You gain 1 experience.")
+        type_text_slowly("\nYou win the gamble. You gain 1 experience.")
     else:
         character["hp"] -= 2
-        type_text_slowly("You lose and take 2 HP damage.")
+        type_text_slowly("\nYou lose and take 2 HP damage.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def storm_challenge(character):
     type_text_slowly("\nA violent storm batters you.")
     character["hp"] -= 1
-    type_text_slowly("You lose 1 HP.")
+    type_text_slowly("\nYou lose 1 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def merchant_challenge(character):
     type_text_slowly("\nA merchant overcharges you for supplies.")
     character["hp"] += 1 if character["hp"] < character["max_hp"] else 0
-    type_text_slowly("You recover 1 HP.")
+    type_text_slowly("\nYou recover 1 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def healer_challenge(character):
     type_text_slowly("\nA wandering healer treats your wounds.")
     heal = 2
     character["hp"] = min(character["hp"] + heal, character["max_hp"])
-    type_text_slowly(f"You gain {heal} HP.")
+    type_text_slowly(f"\nYou gain {heal} HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def spirit_challenge(character):
     type_text_slowly("\nA spirit blocks your path.")
     if character["honor"] >= 3:
         character["experience"] += 2
-        type_text_slowly("The spirit bows and grants you power. You gain 2 experience.")
+        type_text_slowly("\nThe spirit bows and grants you power. You gain 2 experience.")
     elif character["honor"] <= -2:
         character["hp"] -= 2
-        type_text_slowly("The spirit recoils from your darkness. You lose 2 HP.")
+        type_text_slowly("\nThe spirit recoils from your darkness. You lose 2 HP.")
     else:
-        type_text_slowly("The spirit watches silently and vanishes.")
+        type_text_slowly("\nThe spirit watches silently and vanishes.")
 
 def feast_challenge(character):
     type_text_slowly("\nA village offers you a feast.")
     character["hp"] = min(character["hp"] + 3, character["max_hp"])
-    type_text_slowly("You recover 3 HP.")
+    type_text_slowly("\nYou recover 3 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def thief_challenge(character):
     type_text_slowly("\nA thief steals from you in the night.")
     character["experience"] -= 1
-    type_text_slowly("You lose 1 experience.")
+    type_text_slowly("\nYou lose 1 experience.")
     print(f"Experience: {character['experience']}")
 
 def boar_charge_challenge(character):
     type_text_slowly("\nA wild boar charges!")
     damage = random.randint(2,4)
     character["hp"] -= damage
-    type_text_slowly(f"You take {damage} HP damage.")
+    type_text_slowly(f"\nYou take {damage} HP damage.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def bridge_challenge(character):
     type_text_slowly("\nA broken bridge blocks your path.")
     if random.randint(1,10) >= 5:
-        type_text_slowly("You cross safely.")
+        type_text_slowly("\nYou cross safely.")
     else:
         character["hp"] -= 2
-        type_text_slowly("You fall and lose 2 HP.")
+        type_text_slowly("\nYou fall and lose 2 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def fire_challenge(character):
     type_text_slowly("\nA sudden fire engulfs the path.")
     character["hp"] -= 3
-    type_text_slowly("You lose 3 HP.")
+    type_text_slowly("\nYou lose 3 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def blessing_challenge(character):
     type_text_slowly("\nA monk blesses your journey.")
     character["experience"] += 1
-    type_text_slowly("You gain 1 experience.")
+    type_text_slowly("\nYou gain 1 experience.")
     print(f"Experience: {character['experience']}")
 
 
 def training_challenge(character):
     type_text_slowly("\nA veteran trains you briefly.")
     character["experience"] += 2
-    type_text_slowly("You gain 2 experience.")
+    type_text_slowly("\nYou gain 2 experience.")
     print(f"Experience: {character['experience']}")
 
 def pilgrim_challenge(character):
     type_text_slowly("\nA pilgrim shares wisdom.")
     character["experience"] += 1
-    type_text_slowly("You gain 1 experience.")
+    type_text_slowly("\nYou gain 1 experience.")
     print(f"Experience: {character['experience']}")
 
 def assassin_challenge(character):
     type_text_slowly("\nAn assassin strikes from the shadows!")
     damage = random.randint(3,5)
     character["hp"] -= damage
-    type_text_slowly(f"You lose {damage} HP.")
+    type_text_slowly(f"\nYou lose {damage} HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def sacrifice_challenge(character):
@@ -360,18 +360,18 @@ def sacrifice_challenge(character):
         character["honor"] -= 2
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] -= 1
-            type_text_slowly("Power answers your blood. You lose 2 HP but gain 2 attack. Ryūichi turns away in silence.")
+            type_text_slowly("\nPower answers your blood. You lose 2 HP but gain 2 attack. Ryūichi turns away in silence.")
         else:
-            type_text_slowly("Dark power floods your veins. You lose 2 HP but gain 2 attack.")
+            type_text_slowly("\nDark power floods your veins. You lose 2 HP but gain 2 attack.")
         print(f"HP: {character['hp']}/{character['max_hp']} | Experience: {character['experience']}")
         print(f"Attack power: {character['attack_power']}")
     else:
         character["honor"] += 2
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] += 1
-            type_text_slowly("You refuse the dark power. Ryūichi nods with respect.")
+            type_text_slowly("\nYou refuse the dark power. Ryūichi nods with respect.")
         else:
-            type_text_slowly("You resist the temptation and walk on.")
+            type_text_slowly("\nYou resist the temptation and walk on.")
 
 
 def hostage_challenge(character):
@@ -390,19 +390,19 @@ def hostage_challenge(character):
             character["honor"] += 1
             if ryuichi_present(character):
                 character["bond_with_Ryūichi"] += 1
-                type_text_slowly("You save the hostage. Ryūichi exhales in relief.")
+                type_text_slowly("\nYou save the hostage. Ryūichi exhales in relief.")
             else:
                 character["experience"] += 1
-                type_text_slowly("You strike fast and save the hostage.")
+                type_text_slowly("\nYou strike fast and save the hostage.")
         else:
             if ryuichi_present(character):
                 character["bond_with_Ryūichi"] += 1
-                type_text_slowly("You attempt to save the villager but you do not make it in time.")
+                type_text_slowly("\nYou attempt to save the villager but you do not make it in time.")
                 type_text_slowly("You viciously kill the bandits in a fit of rage.")
                 type_text_slowly("Ryūichi rubs your back and consoles you.")
             else:
                 character["experience"] += 1
-                type_text_slowly("You attempt to save the villager but you do not make it in time.")
+                type_text_slowly("\nYou attempt to save the villager but you do not make it in time.")
                 type_text_slowly("You viciously kill the bandits in a fit of rage.")
         print(f"Experience: {character['experience']}")
     elif choice == "2":
@@ -410,20 +410,20 @@ def hostage_challenge(character):
         character["experience"] += 1
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] += 1
-            type_text_slowly("You explain to the bandits they will receive death if they persist.")
+            type_text_slowly("\nYou explain to the bandits they will receive death if they persist.")
             type_text_slowly("The bandits try to run but you and Ryūichi catch them. You leave them tied up for the villagers")
         else:
-            type_text_slowly("You explain to the bandits they will receive death if they persist.")
+            type_text_slowly("\nYou explain to the bandits they will receive death if they persist.")
             type_text_slowly("The bandits run away.")
         print(f"Experience: {character['experience']}")
     else:
         character["honor"] -= 2
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] -= 1
-            type_text_slowly("You decide to leave them to their fate.")
+            type_text_slowly("\nYou decide to leave them to their fate.")
             type_text_slowly("Ryūichi looks at you in frustration and steps in to save the villager")
         else:
-            type_text_slowly("You decide to leave them to their fate.")
+            type_text_slowly("\nYou decide to leave them to their fate.")
 
 def wounded_soldier_challenge(character):
     type_text_slowly("\nA wounded soldier begs for help.")
@@ -439,20 +439,20 @@ def wounded_soldier_challenge(character):
         character["honor"] += 1
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] += 2
-            type_text_slowly("You wrap the soldier's wounds and provide him with medicine.")
+            type_text_slowly("\nYou wrap the soldier's wounds and provide him with medicine.")
             type_text_slowly("Ryūichi watches with respect.")
         else:
-            type_text_slowly("You wrap the soldier's wounds and provide him with medicine.")
+            type_text_slowly("\nYou wrap the soldier's wounds and provide him with medicine.")
             type_text_slowly("The soldier thanks you with trembling hands.")
     elif choice == "2":
         character["honor"] -= 2
         if ryuichi_present(character):
-            type_text_slowly("You kill the wounded soldier. Ryūichi turns away, shaken.")
+            type_text_slowly("\nYou kill the wounded soldier. Ryūichi turns away, shaken.")
         else:
-            type_text_slowly("You grant him a quick death.")
+            type_text_slowly("\nYou grant him a quick death.")
     else:
         character["honor"] -= 1
-        type_text_slowly("You leave him behind to suffer.")
+        type_text_slowly("\nYou leave him behind to suffer.")
 
 def execution_challenge(character):
     type_text_slowly("\nAn execution of murderous child is underway in the village square.")
@@ -469,20 +469,20 @@ def execution_challenge(character):
         if ryuichi_present(character):
             character["honor"] += 2
             character["bond_with_Ryūichi"] += 1
-            type_text_slowly("You disrupt the execution as Ryūichi fights the samurai beside you.")
+            type_text_slowly("\nYou disrupt the execution as Ryūichi fights the samurai beside you.")
             type_text_slowly("The child decides to join the ronin.")
         else:
             character["honor"] -= 1
-            type_text_slowly("You disrupt the execution as chaos erupts. The child runs away while killing villagers.")
+            type_text_slowly("\nYou disrupt the execution as chaos erupts. The child runs away while killing villagers.")
     elif choice == "2":
-        type_text_slowly("You say nothing as the blade falls.")
+        type_text_slowly("\nYou say nothing as the blade falls.")
     else:
         character["honor"] -= 3
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] -= 2
-            type_text_slowly("You gleefully help the executioner. Ryūichi looks at you in disbelief.")
+            type_text_slowly("\nYou gleefully help the executioner. Ryūichi looks at you in disbelief.")
         else:
-            type_text_slowly("You coldly assist the execution without question.")
+            type_text_slowly("\nYou coldly assist the execution without question.")
 
 def duel_of_honor_challenge(character):
     type_text_slowly("\nA proud warrior challenges you publicly.")
@@ -499,27 +499,27 @@ def duel_of_honor_challenge(character):
         character["honor"] += 2
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] += 1
-            type_text_slowly("You best the warrior and he begs for mercy.")
+            type_text_slowly("\nYou best the warrior and he begs for mercy.")
             type_text_slowly("Ryūichi holds your fist high in the air.")
         else:
-            type_text_slowly("You best the warrior and he begs for mercy.")
+            type_text_slowly("\nYou best the warrior and he begs for mercy.")
         print(f"Experience: {character['experience']}")
     elif choice == "2":
         if ryuichi_present(character):
-            type_text_slowly("You shove dirt in the warriors face then stab him in the groin.")
+            type_text_slowly("\nYou shove dirt in the warriors face then stab him in the groin.")
             type_text_slowly("Ryūichi hangs his head in shame.")
         else:
             character["experience"] += 1
             character["honor"] -= 2
-            type_text_slowly("You shove dirt in the warriors face then stab him in the groin.")
+            type_text_slowly("\nYou shove dirt in the warriors face then stab him in the groin.")
         print(f"Experience: {character['experience']}")
     else:
         character["honor"] -= 1
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] -= 1
-            type_text_slowly("You walk away as the crowd jeers. Ryūichi looks at you in disappointment.")
+            type_text_slowly("\nYou walk away as the crowd jeers. Ryūichi looks at you in disappointment.")
         else:
-            type_text_slowly("You walk away as the crowd jeers.")
+            type_text_slowly("\nYou walk away as the crowd jeers.")
 
 def burning_village_challenge(character):
     type_text_slowly("\nA village burns under attack!")
@@ -536,25 +536,25 @@ def burning_village_challenge(character):
         character["experience"] += 1
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] += 1
-            type_text_slowly("You rescue villagers as Ryūichi covers your retreat.")
+            type_text_slowly("\nYou rescue villagers as Ryūichi covers your retreat.")
         else:
-            type_text_slowly("You pull villagers from the flames alone.")
+            type_text_slowly("\nYou pull villagers from the flames alone.")
     elif choice == "2":
         character["experience"] += 2
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] -= 1
-            type_text_slowly("You cut down fleeing attackers through smoke and fire. Ryūichi runs to save the villagers.")
+            type_text_slowly("\nYou cut down fleeing attackers through smoke and fire. Ryūichi runs to save the villagers.")
         else:
-            type_text_slowly("As the village burns, you cut down fleeing attackers through smoke and fire.")
+            type_text_slowly("\nAs the village burns, you cut down fleeing attackers through smoke and fire.")
     else:
         if ryuichi_present(character):
             character["bond_with_Ryūichi"] -= 2
             character["honor"] -= 2
-            type_text_slowly("Ryūichi shoves you to the ground as you try and steal from the burning village.")
+            type_text_slowly("\nRyūichi shoves you to the ground as you try and steal from the burning village.")
         else:
             character["honor"] -= 2
             character["experience"] += 1
-            type_text_slowly("You scavenge what supplies you can from the burning ruins and move on.")
+            type_text_slowly("\nYou scavenge what supplies you can from the burning ruins and move on.")
     print(f"Experience: {character['experience']}")
 
 def final_boss_fight(character):
