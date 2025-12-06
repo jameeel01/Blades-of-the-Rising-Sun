@@ -3,7 +3,7 @@ import time
 import sys
 import random
 
-def type_text_slowly(text, delay=0.04):
+def type_text_slowly(text, delay=0.03):
     for character in str(text):
         sys.stdout.write(character)
         sys.stdout.flush()
@@ -78,27 +78,34 @@ def final_duel_intro(character):
         type_text_slowly("\"You wear the Emperor’s chains now.\"")
 
 def choose_path():
-    type_text_slowly("\nThe rain falls softly on the village of your childhood.")
-    type_text_slowly("You stand beneath the eaves of a ruined shrine. You remember fond memories of your time spent in the village.")
-    type_text_slowly("Beside you stands Ryūichi — your brother in battle since youth.\n")
+    while True:
+        skip_intro = input("Skip intro? (Y/N): ").strip().lower()
+        if skip_intro in ["y", "n"]:
+            break
+        print("Invalid input. Please enter Y or N.")
 
-    type_text_slowly("Together, you trained under the same master and survived your first war.")
-    type_text_slowly("Together as samurai, you stand in pain gazing at the village you grew up in.\n")
-    type_text_slowly("Ryūichi turns to you, rain tracing lines down his hardened face.")
-    type_text_slowly("\"The Emperor tightens his grip on the land,\" he says quietly.")
-    type_text_slowly("\"Order is coming... whether through law — or blood.\"")
-    type_text_slowly("\"Tonight, we choose who we become.\"\n")
+    if skip_intro != "y":
+        type_text_slowly("\nThe rain falls softly on the village of your childhood.")
+        type_text_slowly("You stand beneath the eaves of a ruined shrine. You remember fond memories of your time spent in the village.")
+        type_text_slowly("Beside you stands Ryūichi — your brother in battle since youth.\n")
 
-    type_text_slowly("You look into his eyes and see no traces of the friend you grew up with.")
-    type_text_slowly("There is only a product of war.\n")
+        type_text_slowly("Together, you trained under the same master and survived your first war.")
+        type_text_slowly("Together as samurai, you stand in pain gazing at the village you grew up in.\n")
+        type_text_slowly("Ryūichi turns to you, rain tracing lines down his hardened face.")
+        type_text_slowly("\"The Emperor tightens his grip on the land,\" he says quietly.")
+        type_text_slowly("\"Order is coming... whether through law — or blood.\"")
+        type_text_slowly("\"Tonight, we choose who we become.\"\n")
 
-    type_text_slowly("He steps closer and holds his hand out.")
-    type_text_slowly("\"Stand with me,\" he says.")
-    type_text_slowly("\"Not as soldiers. Not as weapons.\"")
-    type_text_slowly("\"But as brothers.\"\n")
+        type_text_slowly("You look into his eyes and see no traces of the friend you grew up with.")
+        type_text_slowly("There is only a product of war.\n")
+
+        type_text_slowly("He steps closer and holds his hand out.")
+        type_text_slowly("\"Stand with me,\" he says.")
+        type_text_slowly("\"Not as soldiers. Not as weapons.\"")
+        type_text_slowly("\"But as brothers.\"\n")
 
     while True:
-        type_text_slowly("Choose your answer:\n")
+        type_text_slowly("Choose your path:\n")
 
         print("[1] Samurai — Swear loyalty to the Emperor")
         type_text_slowly("    You will wear the symbol of the throne.")
@@ -113,23 +120,28 @@ def choose_path():
         choice = input("Enter 1 or 2: ").strip()
 
         if choice == "1":
-            type_text_slowly("\nYou lower your head.")
-            type_text_slowly("\"The throne must be protected,\" you say.")
-            type_text_slowly("\"Even from itself.\"")
-            type_text_slowly("\nRyūichi exhales slowly.")
-            type_text_slowly("\"Then this is where our paths split, my friend.\"")
-            type_text_slowly("\"I no longer wish to fight for this Empire\"")
-            type_text_slowly("\"May your blade never waver.\"\n")
+            if skip_intro != "y":
+                type_text_slowly("\nYou lower your head.")
+                type_text_slowly("\"The throne must be protected,\" you say.")
+                type_text_slowly("\"Even from itself.\"")
+                type_text_slowly("\nRyūichi exhales slowly.")
+                type_text_slowly("\"Then this is where our paths split, my friend.\"")
+                type_text_slowly("\"I no longer wish to fight for this Empire\"")
+                type_text_slowly("\"May your blade never waver.\"\n")
             return "samurai"
 
-        if choice == "2":
-            type_text_slowly("\nYou tighten your grip on your blade.")
-            type_text_slowly("\"The Empire is rotting,\" you whisper.")
-            type_text_slowly("\"And I will not die defending a lie.\"")
-            type_text_slowly("\nRyūichi smiles for the first time in years.")
-            type_text_slowly("\"Then we walk as ghosts,\" he says.")
-            type_text_slowly("\"And we reshape history with steel.\"\n")
+        elif choice == "2":
+            if skip_intro != "y":
+                type_text_slowly("\nYou tighten your grip on your blade.")
+                type_text_slowly("\"The Empire is rotting,\" you whisper.")
+                type_text_slowly("\"And I will not die defending a lie.\"")
+                type_text_slowly("\nRyūichi smiles for the first time in years.")
+                type_text_slowly("\"Then we walk as ghosts,\" he says.")
+                type_text_slowly("\"And we reshape history with steel.\"\n")
             return "ronin"
+
+        else:
+            print("Invalid choice. Please enter 1 or 2.")
 
 def ryuichi_random_dialogue(character):
     if character["path"] == "samurai":
@@ -171,21 +183,21 @@ def determine_betrayal(character):
 def ryuichi_flashback(character):
     if character["bond_with_Ryūichi"] >= 4:
         flashbacks = [
-            "You remember the two of you stealing training swords as children.",
-            "You remember Ryūichi shielding you from your master's strike.",
-            "You remember laughing beside the fire after your first victory together."
+            "You remember the two of you stealing training swords as children.\n",
+            "You remember Ryūichi shielding you from your master's strike.\n",
+            "You remember laughing beside the fire after your first victory together.\n"
         ]
     elif character["bond_with_Ryūichi"] <= -2:
         flashbacks = [
-            "You remember the night Ryūichi turned his back on you.",
-            "You remember the argument that ended in drawn blades.",
-            "You remember walking away while he stood alone in the rain."
+            "You remember the night Ryūichi turned his back on you.\n",
+            "You remember the argument that ended in drawn blades.\n",
+            "You remember walking away while he stood alone in the rain.\n"
         ]
     else:
         flashbacks = [
-            "You remember the two of you training in silence at dawn.",
-            "You remember fighting side by side without speaking.",
-            "You remember Ryūichi dragging you from the battlefield while bleeding."
+            "You remember the two of you training in silence at dawn.\n",
+            "You remember fighting side by side without speaking.\n",
+            "You remember Ryūichi dragging you from the battlefield while bleeding.\n"
         ]
 
     type_text_slowly("\n[FLASHBACK]: ")

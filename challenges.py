@@ -452,7 +452,10 @@ def wounded_soldier_challenge(character):
             type_text_slowly("\nYou grant him a quick death.")
     else:
         character["honor"] -= 1
-        type_text_slowly("\nYou leave him behind to suffer.")
+        if ryuichi_present(character):
+            type_text_slowly("\nYou leave him behind to suffer. Ryūichi yells at you and starts helping the soldier.")
+        else:
+            type_text_slowly("\nYou leave him behind to suffer.")
 
 def execution_challenge(character):
     type_text_slowly("\nAn execution of murderous child is underway in the village square.")
