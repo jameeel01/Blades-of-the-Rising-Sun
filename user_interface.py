@@ -33,9 +33,6 @@ def print_death_screen(character):
     type_text_slowly("The wind carries your story into silence...\n")
 
 def print_victory_screen(character):
-    banner = pyfiglet.figlet_format("VICTORY", font="big")
-    print(banner)
-
     if character["betrayal"]:
         type_text_slowly("Ryūichi lies motionless in the dust.")
         type_text_slowly("His eyes never forgave you.")
@@ -61,6 +58,9 @@ def print_victory_screen(character):
     type_text_slowly(f"{character['name']} stands beneath the rising sun.")
     type_text_slowly("Your legend is written in steel and sacrifice.\n")
 
+    banner = pyfiglet.figlet_format("VICTORY", font="big")
+    print(banner)
+
 def print_final_duel_banner(boss_name):
     banner = pyfiglet.figlet_format("FINAL DUEL", font="slant")
     print(banner)
@@ -79,17 +79,18 @@ def final_duel_intro(character):
 
 def choose_path():
     type_text_slowly("\nThe rain falls softly on the village of your childhood.")
-    type_text_slowly("You stand beneath the eaves of a ruined shrine, armor wet, blade heavy at your side.")
+    type_text_slowly("You stand beneath the eaves of a ruined shrine. You remember fond memories of your time spent in the village.")
     type_text_slowly("Beside you stands Ryūichi — your brother in battle since youth.\n")
 
-    type_text_slowly("Together, you trained under the same master.")
-    type_text_slowly("Together, you survived your first war.")
-    type_text_slowly("And together, you now stand at the edge of a divided future.\n")
-
+    type_text_slowly("Together, you trained under the same master and survived your first war.")
+    type_text_slowly("Together as samurai, you stand in pain gazing at the village you grew up in.\n")
     type_text_slowly("Ryūichi turns to you, rain tracing lines down his hardened face.")
     type_text_slowly("\"The Emperor tightens his grip on the land,\" he says quietly.")
     type_text_slowly("\"Order is coming... whether through law — or blood.\"")
     type_text_slowly("\"Tonight, we choose who we become.\"\n")
+
+    type_text_slowly("You look into his eyes and see no traces of the friend you grew up with.")
+    type_text_slowly("There is only a product of war.\n")
 
     type_text_slowly("He steps closer and holds his hand out.")
     type_text_slowly("\"Stand with me,\" he says.")
@@ -97,7 +98,7 @@ def choose_path():
     type_text_slowly("\"But as brothers.\"\n")
 
     while True:
-        type_text_slowly("Choose your path:\n")
+        type_text_slowly("Choose your answer:\n")
 
         print("[1] Samurai — Swear loyalty to the Emperor")
         type_text_slowly("    You will wear the symbol of the throne.")
@@ -117,6 +118,7 @@ def choose_path():
             type_text_slowly("\"Even from itself.\"")
             type_text_slowly("\nRyūichi exhales slowly.")
             type_text_slowly("\"Then this is where our paths split, my friend.\"")
+            type_text_slowly("\"I no longer wish to fight for this Empire\"")
             type_text_slowly("\"May your blade never waver.\"\n")
             return "samurai"
 
@@ -130,6 +132,9 @@ def choose_path():
             return "ronin"
 
 def ryuichi_random_dialogue(character):
+    if character["path"] == "samurai":
+        return
+
     tragic_lines = [
         "\"We were boys when we learned to kill...was there ever another way?\"",
         "\"Every road we walk seems soaked in blood now.\""
@@ -185,3 +190,19 @@ def ryuichi_flashback(character):
 
     type_text_slowly("\n[FLASHBACK]: ")
     type_text_slowly(random.choice(flashbacks))
+
+def explain_game_goal(character):
+    type_text_slowly("\nThe Empire stands on the edge of collapse.")
+    type_text_slowly("Rebels rise in the shadows. The Emperor (帝) clings to power.\n")
+
+    if character["path"] == "ronin":
+        type_text_slowly("You (人) walk the road to the palace to kill the Emperor (帝).")
+        type_text_slowly("Your blade will decide the fate of the Empire.\n")
+    else:
+        type_text_slowly("You (人) march toward the palace to protect the Emperor (帝).")
+        type_text_slowly("You will stand against the rising ronins.\n")
+
+    type_text_slowly("Grow strong enough to reach the final battlefield.")
+    type_text_slowly("Choose who you become.")
+    type_text_slowly("Survive the last duel beneath the rising sun.\n")
+
