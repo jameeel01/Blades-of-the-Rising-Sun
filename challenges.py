@@ -31,14 +31,14 @@ def ryuichi_present(character):
 
 def challenge_stack(character):
     """
-    Create and shuffle a non-repeating stack of challenges for the player.
+    Create a cycling iterator of challenges for the player using itertools.cycle.
 
     :param character: a dictionary representing the player's character
     :precondition: character is a valid dictionary
-    :postcondition: character gains a shuffled "challenge_stack" list
+    :postcondition: character gains a cycling "challenge_stack" iterator
     :return: an updated character dictionary
     """
-    challenge = cycle([
+    challenge_list = [
         "combat", "riddle", "moral", "traveler",
         "duel", "sacrifice", "gamble",
         "hostage", "wounded_soldier",
@@ -48,23 +48,22 @@ def challenge_stack(character):
         "spirit", "feast", "thief",
         "bridge", "blessing", "training",
         "pilgrim", "assassin"
-    ])
-    character["challenge_stack"] = challenge
+    ]
+    character["challenge_stack"] = cycle(challenge_list)
 
 def execute_challenge(character):
     """
-    Execute a randomly selected, non-repeating challenge from the character's challenge stack list.
+    Execute the next challenge from the character's cycling challenge stack.
 
     :param character: a dictionary representing the player's character
-    :precondition: character dictionary contains a valid "challenge_stack"
-    :precondition: character dictionary can add a valid "challenge_stack"
-    :postcondition: one challenge is removed from the stack list
-    :return: execute a challenge from the dictionary stack list
+    :precondition: character dictionary contains a valid "challenge_stack" iterator
+    :postcondition: the next challenge from the cycle is executed
+    :return: execute a challenge from the cycling challenge stack
     """
-    if len(character["challenge_stack"]) == 0:
+    if "challenge_stack" not in character or character["challenge_stack"] is None:
         challenge_stack(character)
 
-    challenge_type = character["challenge_stack"].pop()
+    challenge_type = next(character["challenge_stack"])
 
     if challenge_type == "combat":
         combat_challenge(character)
@@ -137,10 +136,10 @@ def combat_challenge(character):
     enemy = random.choice(available_foes)
     enemy_hp = 6 + (character["level"] * 3)
 
-    type_text_slowly(f"\nA {enemy} challenges you to battle!")
+    type_text_slowly(f"\nA {enemy["name"]} challenges you to battle!")
 
     while enemy_hp > 0 and character["hp"] > 0:
-        print(f"\nYour HP: {character['hp']}/{character['max_hp']} | {enemy.title()} HP: {enemy_hp}")
+        print(f"\nYour HP: {character['hp']}/{character['max_hp']} | {enemy["name"]} HP: {enemy_hp}")
         print("[1] Attack")
         print("[2] Defend")
         print("[3] Run away\n")
@@ -155,18 +154,18 @@ def combat_challenge(character):
         if choice == "1":
             if player_roll >= enemy_roll:
                 enemy_hp -= character["attack_power"]
-                type_text_slowly(f"\nYou strike the {enemy} for {character["attack_power"]} damage!")
+                type_text_slowly(f"\nYou strike the {enemy["name"]} for {character["attack_power"]} damage!")
             else:
                 damage = 2 * character["level"]
                 character["hp"] -= damage
-                type_text_slowly(f"\nThe {enemy} hits you for {damage} damage!")
+                type_text_slowly(f"\nThe {enemy["name"]} hits you for {damage} damage!")
                 type_text_slowly(f"\nYou lose {damage} HP!")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "2":
             heal = 2
             if character["hp"] == character["max_hp"]:
-                type_text_slowly(f"You block {enemy}'s attack successfully.")
+                type_text_slowly(f"You block {enemy["name"]}'s attack successfully.")
             else:
                 character["hp"] += heal
                 type_text_slowly(f"You block and drink a health potion. You heal for {heal} HP")
@@ -174,7 +173,7 @@ def combat_challenge(character):
 
         elif choice == "3":
             if random.randint(1, 10) >= 4:
-                type_text_slowly(f"\nYou are being watched by the locals and can't run! The {enemy} strikes you!")
+                type_text_slowly(f"\nYou are being watched by the locals and can't run! The {enemy["name"]} strikes you!")
                 type_text_slowly(f"\nYou lose 1 HP!")
                 character["hp"] -= 1
             else:
@@ -182,7 +181,7 @@ def combat_challenge(character):
                 break
 
     if enemy_hp <= 0:
-        type_text_slowly(f"\nYou have defeated the {enemy}.")
+        type_text_slowly(f"\nYou have defeated the {enemy["name"]}.")
         character["experience"] += 1
     else:
         type_text_slowly("\nYou retreat from battle.")
