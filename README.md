@@ -31,8 +31,8 @@ through three levels, and multiple endings based on player choices.
 ## Game Objective
 
 The primary objective of Blades of the Rising Sun is to navigate the 10 x 10 game
-board and reach the Emperor's palace at coordinates (9, 9). However, the path you take
-and your ultimate goal depend on your chosen path:
+board and reach the Emperor's palace at coordinates (9, 9). However, the ending you play
+depends on your chosen path and the decisions you make:
 
 - **Ronin Path**: Reach the palace and defeat the Emperor to end his reign. You must
   reach Level 3 before you can enter the palace and face the final boss.
