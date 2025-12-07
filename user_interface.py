@@ -1,3 +1,8 @@
+"""
+Jameel Mohammed
+A01430376
+No unit tests were done for this module as it consists of print statements and ASCII
+"""
 import pyfiglet
 import time
 import sys
