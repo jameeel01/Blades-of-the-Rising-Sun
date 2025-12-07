@@ -5,7 +5,7 @@ A01430376
 import pyfiglet
 from user_interface import type_text_slowly
 
-def make_character(player_name, path):
+def make_character(player_name: str, path: str) -> dict:
     """
     Create and return a new player character dictionary.
 
