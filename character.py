@@ -39,7 +39,7 @@ def make_character(player_name: str, path: str) -> dict:
         "bond_with_Ryūichi": 0,
         "honor": 0,
         "betrayal": False,
-        "challenge_stack": []
+        "challenge_stack": None
     }
 
 def is_alive(character):
