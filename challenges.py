@@ -1,3 +1,7 @@
+"""
+Jameel Mohammed
+A01430376
+"""
 import random
 from user_interface import (
     final_boss_intro_samurai,
@@ -322,7 +326,7 @@ def traveler_challenge(character):
 
 def gamble_challenge(character):
     """
-     Perform a dice gambling encounter with random rewards or penalties.
+     Perform a gambling encounter with random rewards or penalties.
 
      :param character: a dictionary representing the player's character
      :precondition: character dictionary contains hp and experience

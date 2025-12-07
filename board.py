@@ -1,5 +1,8 @@
+"""
+Jameel Mohammed
+A01430376
+"""
 import random
-
 
 def make_board(rows, columns):
     """

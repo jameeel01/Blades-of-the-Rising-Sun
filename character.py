@@ -1,3 +1,7 @@
+"""
+Jameel Mohammed
+A01430376
+"""
 import pyfiglet
 from user_interface import type_text_slowly
 
@@ -42,7 +46,7 @@ def is_alive(character):
     """
     Determine whether a character is still alive.
 
-    :param character: a dictionary containing an hp value
+    :param character: a dictionary containing a hp value
     :precondition: character dictionary contains "hp"
     :postcondition: no changes are made to the character dictionary
     :return: True if hp is greater than 0, otherwise False
