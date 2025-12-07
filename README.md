@@ -99,15 +99,16 @@ and your ultimate goal depend on your chosen path:
 | (k) Appropriate use of the range function | `board.py` lines 46-47 (`range(rows)`,
   `range(columns)`), lines 102-104 (`range(10)`), `movement.py` line 73 (`range(0,
   10)`) |
-| Thoughtful use of itertools | `challenges.py` line 5 (`from itertools import
-  cycle`), line 41 |
-| Use of random module | `board.py` line 5, `challenges.py` line 6, used throughout |
-| Function annotations | `character.py` line 8 (`make_character(player_name: str,
+| (l) Thoughtful and meaningful use of one or more functions from itertools |
+  `challenges.py` line 5 (`from itertools import cycle`), line 41 |
+| (m) The random module | `board.py` line 5, `challenges.py` line 6, used throughout |
+| (n) Function annotations | `character.py` line 8 (`make_character(player_name: str,
   path: str) -> dict`) |
-| Doctests and/or unit tests for every function | `unit_tests/` directory contains
-  comprehensive test coverage |
-| All output formatted using f-strings | Throughout all files (e.g., `board.py` line
-  49, 63, 66-67, `challenges.py` multiple locations) |
+| (o) Doctests and/or unit tests for every single function | `unit_tests/` directory
+  contains comprehensive test coverage |
+| (p) ALL output must be formatted using f-strings and/or str.format and/or
+  %-formatting where applicable | Throughout all files (e.g., `board.py` line 49,
+  63, 66-67, `challenges.py` multiple locations) |
 
 ## Project Structure
 
