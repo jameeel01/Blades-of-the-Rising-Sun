@@ -15,9 +15,26 @@ from user_interface import (
 )
 
 def ryuichi_present(character):
+    """
+    Determine whether Ryūichi is currently accompanying the player.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains a "path" key
+    :postcondition: the character's path is determined
+    :return: character path in dictionary updates to "ronin"
+    """
     return character["path"] == "ronin"
 
 def type_text_slowly(text, delay=0.04):
+    """
+    Print text to the screen one character at a time with a delay.
+
+    :param text: a string of text
+    :param delay: a float representing delay between each character
+    :precondition: text must be convertible to a string
+    :postcondition: text is delayed when displayed to the terminal
+    :return: text output printed letter by letter
+    """
     for character in str(text):
         sys.stdout.write(character)
         sys.stdout.flush()
@@ -25,6 +42,14 @@ def type_text_slowly(text, delay=0.04):
     sys.stdout.write("\n")
 
 def challenge_stack(character):
+    """
+    Create and shuffle a non-repeating stack of challenges for the player.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character is a valid dictionary
+    :postcondition: character gains a shuffled "challenge_stack" list
+    :return: an updated character dictionary
+    """
     challenge = [
         "combat", "riddle", "moral", "traveler",
         "duel", "sacrifice", "gamble",
@@ -41,6 +66,15 @@ def challenge_stack(character):
     random.shuffle(character["challenge_stack"])
 
 def execute_challenge(character):
+    """
+    Execute a randomly selected, non-repeating challenge from the character's challenge stack list.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains a valid "challenge_stack"
+    :precondition: character dictionary can add a valid "challenge_stack"
+    :postcondition: one challenge is removed from the stack list
+    :return: execute a challenge from the dictionary stack list
+    """
     if len(character["challenge_stack"]) == 0:
         challenge_stack(character)
 
@@ -101,6 +135,14 @@ def execute_challenge(character):
 
 
 def combat_challenge(character):
+    """
+    Execute a combat encounter against a random enemy and choose from a list of inputs.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp, max_hp, attack_power, and level
+    :postcondition: character hp and experience are updated
+    :return: the updated character dictionary
+    """
     foes = ["lost child", "rogue samurai", "wild boar", "mountain thief", "seductive ninja"]
     enemy = random.choice(foes)
     enemy_hp = 6 + (character["level"] * 3)
@@ -156,6 +198,14 @@ def combat_challenge(character):
         type_text_slowly("\nYou retreat from battle.")
 
 def riddle_challenge(character):
+    """
+    Present a riddle that rewards experience for a correct answer.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp, experience, and bond_with_Ryūichi
+    :postcondition: character hp, experience, or bond are updated
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA wandering monk stops you.")
     type_text_slowly("What walks on four legs in the morning, two at noon, and three in the evening?")
     print("[1] A dragon")
@@ -200,6 +250,14 @@ def shrine_challenge(character):
         print("\nYou bow and walk away.")
 
 def moral_challenge(character):
+    """
+    Present a moral decision involving a starving thief.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains honor, experience, and bond_with_Ryūichi
+    :postcondition: character honor, experience, or bond are updated
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA starving thief steals rice from a farmer.")
     print("[1] Kill the thief")
     print("[2] Let the thief go")
@@ -232,6 +290,14 @@ def moral_challenge(character):
             type_text_slowly("\nYou give your last food away to the thief and walk on in silence.")
 
 def ambush_challenge(character):
+    """
+    Trigger a sudden bandit ambush that damages the player.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp and max_hp
+    :postcondition: character hp is reduced
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nBandits leap from the trees!")
     damage = random.randint(2,4)
     character["hp"] -= damage
@@ -239,6 +305,14 @@ def ambush_challenge(character):
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def traveler_challenge(character):
+    """
+    Handle an encounter with a lost traveler asking for money.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains honor, experience, and bond_with_Ryūichi
+    :postcondition: character honor, experience, and bond_with_Ryūichi are updated
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA lost traveler asks for money.")
     print("[1] Help")
     print("[2] Ignore")
@@ -264,6 +338,14 @@ def traveler_challenge(character):
             type_text_slowly("\nYou leave the traveler behind without looking back.")
 
 def gamble_challenge(character):
+    """
+     Perform a dice gambling encounter with random rewards or penalties.
+
+     :param character: a dictionary representing the player's character
+     :precondition: character dictionary contains hp and experience
+     :postcondition: character hp or experience are updated
+     :return: the updated character dictionary
+     """
     type_text_slowly("\nA dice gambler challenges you.")
     roll = random.randint(1,10)
     if roll >= 6:
@@ -275,18 +357,42 @@ def gamble_challenge(character):
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def storm_challenge(character):
+    """
+    Apply damage to the player due to a violent storm.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp
+    :postcondition: character hp is reduced
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA violent storm batters you.")
     character["hp"] -= 1
     type_text_slowly("\nYou lose 1 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def merchant_challenge(character):
+    """
+    Restore a small amount of health through a merchant interaction.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp and max_hp
+    :postcondition: character hp is updated
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA merchant overcharges you for supplies.")
     character["hp"] += 1 if character["hp"] < character["max_hp"] else 0
     type_text_slowly("\nYou recover 1 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def healer_challenge(character):
+    """
+    Heal the player by a fixed amount through a wandering healer.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp and max_hp
+    :postcondition: character hp increases but does not exceed max_hp
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA wandering healer treats your wounds.")
     heal = 3
     character["hp"] = min(character["hp"] + heal, character["max_hp"])
@@ -294,6 +400,14 @@ def healer_challenge(character):
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def spirit_challenge(character):
+    """
+    Resolve an encounter with a spirit based on the player's honor stat.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains honor, hp, and experience
+    :postcondition: character hp or experience are updated
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA spirit blocks your path.")
     if character["honor"] >= 3:
         character["experience"] += 2
@@ -305,12 +419,28 @@ def spirit_challenge(character):
         type_text_slowly("\nThe spirit watches silently and vanishes.")
 
 def feast_challenge(character):
+    """
+    Restore health to the player through a village feast.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp and max_hp
+    :postcondition: character hp is updated
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA village offers you a feast.")
     character["hp"] = min(character["hp"] + 3, character["max_hp"])
     type_text_slowly("\nYou recover 3 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def thief_challenge(character):
+    """
+    Reduce player's experience due to a theft at night.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains experience
+    :postcondition: character experience is updated
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA thief steals from you in the night.")
     character["experience"] -= 1
     type_text_slowly("\nYou lose 1 experience.")
