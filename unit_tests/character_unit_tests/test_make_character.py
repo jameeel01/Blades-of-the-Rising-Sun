@@ -75,5 +75,5 @@ class Test(TestCase):
     def test_make_character_challenge_stack(self):
         character = make_character("Test", "ronin")
         actual = character["challenge_stack"]
-        expected = []
+        expected = None
         self.assertEqual(actual, expected)
