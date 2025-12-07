@@ -43,10 +43,9 @@ def challenge_stack(character):
         "hostage", "wounded_soldier",
         "execution", "duel_of_honor",
         "burning_village", "shrine",
-        "ambush", "storm", "merchant", "healer",
+        "ambush", "merchant", "healer",
         "spirit", "feast", "thief",
-        "boar_charge", "bridge", "fire",
-        "blessing", "training",
+        "bridge", "blessing", "training",
         "pilgrim", "assassin"
     ]
     character["challenge_stack"] = challenge
@@ -81,8 +80,6 @@ def execute_challenge(character):
         traveler_challenge(character)
     elif challenge_type == "gamble":
         gamble_challenge(character)
-    elif challenge_type == "storm":
-        storm_challenge(character)
     elif challenge_type == "merchant":
         merchant_challenge(character)
     elif challenge_type == "healer":
@@ -93,12 +90,8 @@ def execute_challenge(character):
         feast_challenge(character)
     elif challenge_type == "thief":
         thief_challenge(character)
-    elif challenge_type == "boar_charge":
-        boar_charge_challenge(character)
     elif challenge_type == "bridge":
         bridge_challenge(character)
-    elif challenge_type == "fire":
-        fire_challenge(character)
     elif challenge_type == "blessing":
         blessing_challenge(character)
     elif challenge_type == "training":
@@ -217,6 +210,14 @@ def riddle_challenge(character):
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def shrine_challenge(character):
+    """
+    Present a shrine encounter that may restore health.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp, max_hp, and level
+    :postcondition: character hp changes based on choice
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nYou discover a glowing shrine.")
     print("[1] Drink from the shrine")
     print("[2] Leave it alone")
@@ -258,6 +259,7 @@ def moral_challenge(character):
         character["experience"] += 1
         character["honor"] -= 2
         if ryuichi_present(character):
+            character["bond_with_Ryūichi"] -= 1
             type_text_slowly("\nYou kill the thief. Ryūichi shakes his head in dismay.")
         else:
             type_text_slowly("\nYou carry out the execution without hesitation.")
@@ -287,7 +289,7 @@ def ambush_challenge(character):
     """
     type_text_slowly("\nBandits leap from the trees!")
     damage = random.randint(2,4)
-    character["hp"] -= damage
+    character["hp"] = max(character["hp"] - damage, 0)
     type_text_slowly(f"\nYou escape but lose {damage} HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
@@ -339,23 +341,10 @@ def gamble_challenge(character):
         character["experience"] += 1
         type_text_slowly("\nYou win the gamble. You gain 1 experience.")
     else:
-        character["hp"] -= 2
+        character["hp"] = max(character["hp"] - 2, 0)
         type_text_slowly("\nYou lose and take 2 HP damage.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
-def storm_challenge(character):
-    """
-    Apply damage to the player due to a violent storm.
-
-    :param character: a dictionary representing the player's character
-    :precondition: character dictionary contains hp
-    :postcondition: character hp is reduced
-    :return: the updated character dictionary
-    """
-    type_text_slowly("\nA violent storm batters you.")
-    character["hp"] -= 1
-    type_text_slowly("\nYou lose 1 HP.")
-    print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def merchant_challenge(character):
     """
@@ -367,8 +356,9 @@ def merchant_challenge(character):
     :return: the updated character dictionary
     """
     type_text_slowly("\nA merchant overcharges you for supplies.")
-    character["hp"] += 1 if character["hp"] < character["max_hp"] else 0
-    type_text_slowly("\nYou recover 1 HP.")
+    heal = 2
+    character["hp"] = min(character["hp"] + heal, character["max_hp"])
+    type_text_slowly(f"\nYou recover {heal} HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def healer_challenge(character):
@@ -400,7 +390,7 @@ def spirit_challenge(character):
         character["experience"] += 2
         type_text_slowly("\nThe spirit bows and grants you power. You gain 2 experience.")
     elif character["honor"] <= -2:
-        character["hp"] -= 2
+        character["hp"] = max(character["hp"] - 2, 0)
         type_text_slowly("\nThe spirit recoils from your darkness. You lose 2 HP.")
     else:
         type_text_slowly("\nThe spirit watches silently and vanishes.")
@@ -432,21 +422,6 @@ def thief_challenge(character):
     character["experience"] -= 1
     type_text_slowly("\nYou lose 1 experience.")
 
-def boar_charge_challenge(character):
-    """
-     Apply random damage from a charging wild boar.
-
-     :param character: a dictionary representing the player's character
-     :precondition: character dictionary contains hp
-     :postcondition: character hp is reduced
-     :return: the updated character dictionary
-     """
-    type_text_slowly("\nA wild boar charges!")
-    damage = random.randint(2,4)
-    character["hp"] -= damage
-    type_text_slowly(f"\nYou take {damage} HP damage.")
-    print(f"HP: {character['hp']}/{character['max_hp']}")
-
 def bridge_challenge(character):
     """
     Determine whether the player safely crosses a broken bridge.
@@ -464,19 +439,6 @@ def bridge_challenge(character):
         type_text_slowly("\nYou fall and lose 2 HP.")
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
-def fire_challenge(character):
-    """
-    Inflict damage on the player from a sudden fire.
-
-    :param character: a dictionary representing the player's character
-    :precondition: character dictionary contains hp
-    :postcondition: character hp is reduced
-    :return: the updated character dictionary
-    """
-    type_text_slowly("\nA sudden fire engulfs the path.")
-    character["hp"] -= 3
-    type_text_slowly("\nYou lose 3 HP.")
-    print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def blessing_challenge(character):
     """
