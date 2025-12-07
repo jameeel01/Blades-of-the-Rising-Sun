@@ -36,11 +36,11 @@ def get_user_choice():
 
 def validate_move(character, direction):
     """
-    Check if the player's move stays within the 5x5 board boundaries.
+    Check if the player's move stays within the 10x10 board boundaries.
 
-    :param character: a dictionary containing the character's "X-coordinate" and "Y-coordinate"
+    :param character: a dictionary containing the character's "x-coordinate" and "y-coordinate"
     :param direction: an integer (1 = North, 2 = South, 3 = East, 4 = West)
-    :precondition: character must have valid coordinates within the 5x5 grid, and direction must be between 1 and 4
+    :precondition: character must have valid coordinates within the 10x10 grid, and direction must be between 1 and 4
     :postcondition: determines whether the move is possible within the grid without changing the character's position
     :return: True if the move is valid, False if it would go off the board
 
@@ -74,23 +74,23 @@ def validate_move(character, direction):
 
 def move_character(character, direction):
     """
-    Move the player's position on the 5x5 grid according to the given direction.
+    Move the player's position on the 10x10 grid according to the given direction.
 
-    :param character: a dictionary containing the character's "X-coordinate" and "Y-coordinate"
+    :param character: a dictionary containing the character's "x-coordinate" and "y-coordinate"
     :param direction: an integer (1 = North, 2 = South, 3 = East, 4 = West)
-    :precondition: character must have valid coordinates within the 5x5 grid, and direction must be 1–4
+    :precondition: character must have valid coordinates within the 10x10 grid, and direction must be 1–4
     :postcondition: updates the character's coordinates based on the direction entered
     :return: the updated character dictionary reflecting the new position
 
     >>> test_character = {"x-coordinate": 2, "y-coordinate": 2}
     >>> move_character(test_character, 1)
     >>> test_character
-    {'X-coordinate': 1, 'Y-coordinate': 2}
+    {'x-coordinate': 1, 'y-coordinate': 2}
 
     >>> test_character = {"x-coordinate": 0, "y-coordinate": 0}
     >>> move_character(test_character, 4)
     >>> test_character
-    {'X-coordinate': 0, 'Y-coordinate': -1}
+    {'x-coordinate': 0, 'y-coordinate': -1}
     """
 
     if direction == 1:

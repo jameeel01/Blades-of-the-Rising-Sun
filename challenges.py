@@ -1,6 +1,4 @@
 import random
-import time
-import sys
 from user_interface import (
     final_boss_intro_samurai,
     final_boss_outro_samurai,
@@ -11,7 +9,8 @@ from user_interface import (
     betrayal_duel_scene,
     rebuild_scene,
     abandonment_scene,
-    print_final_duel_banner
+    print_final_duel_banner,
+    type_text_slowly
 )
 
 def ryuichi_present(character):
@@ -24,22 +23,6 @@ def ryuichi_present(character):
     :return: character path in dictionary updates to "ronin"
     """
     return character["path"] == "ronin"
-
-def type_text_slowly(text, delay=0.04):
-    """
-    Print text to the screen one character at a time with a delay.
-
-    :param text: a string of text
-    :param delay: a float representing delay between each character
-    :precondition: text must be convertible to a string
-    :postcondition: text is delayed when displayed to the terminal
-    :return: text output printed letter by letter
-    """
-    for character in str(text):
-        sys.stdout.write(character)
-        sys.stdout.flush()
-        time.sleep(delay)
-    sys.stdout.write("\n")
 
 def challenge_stack(character):
     """
@@ -140,7 +123,7 @@ def combat_challenge(character):
 
     :param character: a dictionary representing the player's character
     :precondition: character dictionary contains hp, max_hp, attack_power, and level
-    :postcondition: character hp and experience are updated
+    :postcondition: character hp and experience change based on choice
     :return: the updated character dictionary
     """
     foes = ["lost child", "rogue samurai", "wild boar", "mountain thief", "seductive ninja"]
@@ -203,7 +186,7 @@ def riddle_challenge(character):
 
     :param character: a dictionary representing the player's character
     :precondition: character dictionary contains hp, experience, and bond_with_Ryūichi
-    :postcondition: character hp, experience, or bond are updated
+    :postcondition: character hp, experience, or bond change based on choice
     :return: the updated character dictionary
     """
     type_text_slowly("\nA wandering monk stops you.")
@@ -255,7 +238,7 @@ def moral_challenge(character):
 
     :param character: a dictionary representing the player's character
     :precondition: character dictionary contains honor, experience, and bond_with_Ryūichi
-    :postcondition: character honor, experience, or bond are updated
+    :postcondition: character honor, experience, or bond change based on choice
     :return: the updated character dictionary
     """
     type_text_slowly("\nA starving thief steals rice from a farmer.")
@@ -310,7 +293,7 @@ def traveler_challenge(character):
 
     :param character: a dictionary representing the player's character
     :precondition: character dictionary contains honor, experience, and bond_with_Ryūichi
-    :postcondition: character honor, experience, and bond_with_Ryūichi are updated
+    :postcondition: character honor, experience, and bond_with_Ryūichi change based on choice
     :return: the updated character dictionary
     """
     type_text_slowly("\nA lost traveler asks for money.")
@@ -343,7 +326,7 @@ def gamble_challenge(character):
 
      :param character: a dictionary representing the player's character
      :precondition: character dictionary contains hp and experience
-     :postcondition: character hp or experience are updated
+     :postcondition: character hp decreased or experience increased
      :return: the updated character dictionary
      """
     type_text_slowly("\nA dice gambler challenges you.")
@@ -376,7 +359,7 @@ def merchant_challenge(character):
 
     :param character: a dictionary representing the player's character
     :precondition: character dictionary contains hp and max_hp
-    :postcondition: character hp is updated
+    :postcondition: character hp is increased
     :return: the updated character dictionary
     """
     type_text_slowly("\nA merchant overcharges you for supplies.")
@@ -405,7 +388,7 @@ def spirit_challenge(character):
 
     :param character: a dictionary representing the player's character
     :precondition: character dictionary contains honor, hp, and experience
-    :postcondition: character hp or experience are updated
+    :postcondition: character hp decreased or experience increased
     :return: the updated character dictionary
     """
     type_text_slowly("\nA spirit blocks your path.")
@@ -424,7 +407,7 @@ def feast_challenge(character):
 
     :param character: a dictionary representing the player's character
     :precondition: character dictionary contains hp and max_hp
-    :postcondition: character hp is updated
+    :postcondition: character hp is increased
     :return: the updated character dictionary
     """
     type_text_slowly("\nA village offers you a feast.")
@@ -438,7 +421,7 @@ def thief_challenge(character):
 
     :param character: a dictionary representing the player's character
     :precondition: character dictionary contains experience
-    :postcondition: character experience is updated
+    :postcondition: character experience is reduced
     :return: the updated character dictionary
     """
     type_text_slowly("\nA thief steals from you in the night.")
@@ -446,6 +429,14 @@ def thief_challenge(character):
     type_text_slowly("\nYou lose 1 experience.")
 
 def boar_charge_challenge(character):
+    """
+     Apply random damage from a charging wild boar.
+
+     :param character: a dictionary representing the player's character
+     :precondition: character dictionary contains hp
+     :postcondition: character hp is reduced
+     :return: the updated character dictionary
+     """
     type_text_slowly("\nA wild boar charges!")
     damage = random.randint(2,4)
     character["hp"] -= damage
@@ -453,6 +444,14 @@ def boar_charge_challenge(character):
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def bridge_challenge(character):
+    """
+    Determine whether the player safely crosses a broken bridge.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character contains hp
+    :postcondition: character hp remains the same or reduced
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA broken bridge blocks your path.")
     if random.randint(1,10) >= 5:
         type_text_slowly("\nYou cross safely.")
@@ -462,12 +461,28 @@ def bridge_challenge(character):
         print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def fire_challenge(character):
+    """
+    Inflict damage on the player from a sudden fire.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp
+    :postcondition: character hp is reduced
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA sudden fire engulfs the path.")
     character["hp"] -= 3
     type_text_slowly("\nYou lose 3 HP.")
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def blessing_challenge(character):
+    """
+    Increase the player's experience through a monk's blessing.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains experience
+    :postcondition: character experience increases
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA monk blesses your journey.")
     character["experience"] += 1
     type_text_slowly("\nYou gain 1 experience.")
@@ -475,16 +490,40 @@ def blessing_challenge(character):
 
 
 def training_challenge(character):
+    """
+    Increase experience through brief training.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains experience
+    :postcondition: character experience increases
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA veteran trains you briefly.")
     character["experience"] += 2
     type_text_slowly("\nYou gain 2 experience.")
 
 def pilgrim_challenge(character):
+    """
+    Reward experience through wisdom shared by a pilgrim.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains experience
+    :postcondition: character experience increases
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA pilgrim shares wisdom.")
     character["experience"] += 1
     type_text_slowly("\nYou gain 1 experience.")
 
 def assassin_challenge(character):
+    """
+    Apply random damage from an assassin ambush.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp
+    :postcondition: character hp decreases
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nAn assassin strikes from the shadows!")
     damage = random.randint(3,5)
     character["hp"] -= damage
@@ -492,6 +531,14 @@ def assassin_challenge(character):
     print(f"HP: {character['hp']}/{character['max_hp']}")
 
 def sacrifice_challenge(character):
+    """
+    Allow the player to sacrifice health in exchange for power or resist temptation.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains hp, honor, attack_power, and bond_with_Ryūichi
+    :postcondition: character hp, honor, attack_power, and bond_with_Ryūichi change based on choice
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA shrine demands sacrifice.")
     print("[1] Offer blood")
     print("[2] Refuse")
@@ -519,6 +566,14 @@ def sacrifice_challenge(character):
 
 
 def hostage_challenge(character):
+    """
+    Resolve a hostage situation through combat, negotiation, or abandonment.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains honor, experience, and bond_with_Ryūichi
+    :postcondition: character honor, experience, and bond_with_Ryūichi change based on choice
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nBandits hold a villager at knifepoint.")
     print("[1] Attack immediately")
     print("[2] Try to negotiate")
@@ -568,6 +623,14 @@ def hostage_challenge(character):
             type_text_slowly("\nYou decide to leave them to their fate.")
 
 def wounded_soldier_challenge(character):
+    """
+    Present a moral decision regarding a wounded soldier.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains honor and bond_with_Ryūichi
+    :postcondition: character honor or bond change based on choice
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA wounded soldier begs for help.")
     print("[1] Heal him")
     print("[2] End his suffering")
@@ -600,6 +663,14 @@ def wounded_soldier_challenge(character):
             type_text_slowly("\nYou leave him behind to suffer.")
 
 def execution_challenge(character):
+    """
+    Handle a public execution event with multiple moral outcomes.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains honor, experience, and bond_with_Ryūichi
+    :postcondition: character honor, experience, and bond_with_Ryūichi change based on choice
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nAn execution of murderous child is underway in the village square.")
     print("[1] Intervene")
     print("[2] Observe silently")
@@ -630,6 +701,14 @@ def execution_challenge(character):
             type_text_slowly("\nYou coldly assist the execution without question.")
 
 def duel_of_honor_challenge(character):
+    """
+    Resolve a public duel that tests the player's honor.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains honor, experience, and bond_with_Ryūichi
+    :postcondition: character honor, experience, and bond_with_Ryūichi change based on choice
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA proud warrior challenges you publicly.")
     print("[1] Accept honorably")
     print("[2] Fight dirty")
@@ -667,6 +746,14 @@ def duel_of_honor_challenge(character):
             type_text_slowly("\nYou walk away as the crowd jeers.")
 
 def burning_village_challenge(character):
+    """
+    Present a burning village scenario with multiple outcomes.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains honor, experience, and bond_with_Ryūichi
+    :postcondition: character honor, experience, and bond_with_Ryūichi change based on choice
+    :return: the updated character dictionary
+    """
     type_text_slowly("\nA village burns under attack!")
     print("[1] Save villagers")
     print("[2] Chase attackers")
@@ -705,6 +792,15 @@ def burning_village_challenge(character):
             print(f"You gain 1 experience.")
 
 def boss_fight(character, boss_name):
+    """
+    Execute the final boss combat sequence.
+
+    :param character: a dictionary representing the player's character
+    :param boss_name: string name of the boss
+    :precondition: character dictionary contains hp, max_hp, level, and attack_power
+    :postcondition: character hp changes based on choice
+    :return: True if the player survives the fight, False otherwise
+    """
     boss_hp = 20 + (character["level"] * 5)
 
     while boss_hp > 0 and character["hp"] > 0:
@@ -761,6 +857,14 @@ def boss_fight(character, boss_name):
     return character["hp"] > 0
 
 def final_boss_story(character):
+    """
+    Execute the full final boss narrative and combat sequence.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains path, bond_with_Ryūichi, and betrayal
+    :postcondition: final story outcome is displayed and game ending is determined
+    :return: True if the player completes the final boss sequence successfully, False otherwise
+    """
     if character["path"] == "samurai":
         boss = character["friend_name"]
 

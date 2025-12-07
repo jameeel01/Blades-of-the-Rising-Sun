@@ -4,6 +4,15 @@ import sys
 import random
 
 def type_text_slowly(text, delay=0.03):
+    """
+    Print text to the screen one character at a time with a delay.
+
+    :param text: a string of text
+    :param delay: a float representing delay between each character
+    :precondition: text must be convertible to a string
+    :postcondition: text is delayed when displayed to the terminal
+    :return: text output printed letter by letter
+    """
     for character in str(text):
         sys.stdout.write(character)
         sys.stdout.flush()

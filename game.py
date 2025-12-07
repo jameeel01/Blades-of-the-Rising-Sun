@@ -33,6 +33,18 @@ from user_interface import (
 )
 
 def game():
+    """
+    Run the main game loop for Blades of the Rising Sun.
+
+    This function controls the full game flow including:
+    character creation, map navigation, random challenges,
+    leveling progression, betrayal determination, and the final boss encounter.
+
+    :precondition: all imported modules and functions must be available and valid
+    :precondition: user input must be provided through the console
+    :postcondition: the game ends with either a victory or death screen displayed
+    :return: player wins or loses the game
+    """
     print_title_screen()
     player_name = input("Enter your character's name: ").strip()
 
@@ -96,6 +108,9 @@ def game():
             print_death_screen(player_character)
 
 def main():
+    """
+    Drive the program.
+    """
     game()
 
 if __name__ == "__main__":
