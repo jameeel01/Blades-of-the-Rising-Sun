@@ -70,7 +70,7 @@ def game():
             if player_character["level"] < 3:
                 type_text_slowly("\nA powerful force blocks your path...")
                 type_text_slowly("You feel the Emperor’s presence beyond this point.")
-                type_text_slowly("You must reach Level 3 before entering the Emperor's palace!\n")
+                type_text_slowly("You must reach Level 3 before entering the Emperor's palace!")
                 type_text_slowly("Come back here when you are ready to approach the Emperor.\n")
                 continue
             else:
