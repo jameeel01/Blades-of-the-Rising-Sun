@@ -20,10 +20,25 @@ def type_text_slowly(text, delay=0.03):
     sys.stdout.write("\n")
 
 def print_title_screen():
+    """
+    Display the game title in large ASCII art format.
+
+    :precondition: pyfiglet library must be installed
+    :postcondition: the game title banner is printed to the terminal
+    :return: generated ASCII banner as a string
+    """
     result = pyfiglet.figlet_format("BLADES OF THE RISING SUN", font="doom")
     print(result)
 
 def print_intro_story(character):
+    """
+    Display the introductory story based on the player's chosen path.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains a valid "path" key
+    :postcondition: the appropriate story text is displayed
+    :return: displayed story text as a string
+    """
     if character["path"] == "samurai":
         type_text_slowly(
             "You chose the path of the Samurai — to serve the Emperor and bring order from within."
@@ -36,6 +51,14 @@ def print_intro_story(character):
         type_text_slowly("You join arms with Ryūichi to take down the Emperor.\n")
 
 def explain_game_goal(character):
+    """
+    Explain the main objective of the game based on the player's path.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains a valid "path" key
+    :postcondition: the game objective is printed to the terminal
+    :return: printed objective text as a string
+    """
     type_text_slowly("\nThe Empire stands on the edge of collapse.")
     type_text_slowly("Rebels rise in the shadows. The Emperor (帝) clings to power.\n")
 
@@ -51,6 +74,15 @@ def explain_game_goal(character):
     type_text_slowly("Survive the last duel beneath the rising sun.\n")
 
 def choose_path():
+    """
+    Prompt the user to choose between the Samurai and Ronin paths.
+
+    User has the option to skip the intro or tutorial.
+
+    :precondition: user must enter valid inputs
+    :postcondition: the selected path is returned as a string
+    :return: "samurai" or "ronin"
+    """
     while True:
         skip_intro = input("Skip intro? (Y/N): ").strip().lower()
         if skip_intro in ["y", "n"]:
@@ -117,12 +149,28 @@ def choose_path():
             print("Invalid choice. Please enter 1 or 2.")
 
 def print_death_screen(character):
+    """
+    Display the game-over screen when the player dies.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains a valid "name"
+    :postcondition: the death banner and story text are printed
+    :return: printed death message as a string
+    """
     banner = pyfiglet.figlet_format("YOU HAVE DIED", font="doom")
     print(banner)
     type_text_slowly(f"\n{character['name']}'s blade falls into the dust.")
     type_text_slowly("The wind carries your story into silence...\n")
 
 def print_victory_screen(character):
+    """
+    Display the victory ending based on the player's final decisions.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains "path", "betrayal", and "bond_with_Ryūichi"
+    :postcondition: the correct ending text is printed to the terminal
+    :return: printed victory story as a string
+    """
     if character["betrayal"]:
         type_text_slowly("Ryūichi lies motionless in the dust.")
         type_text_slowly("His eyes never forgave you.")
@@ -150,10 +198,25 @@ def print_victory_screen(character):
     print(banner)
 
 def print_final_duel_banner():
+    """
+    Display the final duel title banner in ASCII art.
+
+    :precondition: pyfiglet library is installed
+    :postcondition: the banner is printed to the terminal
+    :return: the generated ASCII banner as a string
+    """
     banner = pyfiglet.figlet_format("\nFINAL DUEL", font="slant")
     print(banner)
 
 def final_duel_intro(character):
+    """
+    Display opening dialogue for the final duel based on character state.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains "path" and "betrayal"
+    :postcondition: the appropriate duel intro dialogue is printed
+    :return: the displayed duel dialogue as a string
+    """
     if character["betrayal"]:
         type_text_slowly("\nRyūichi steps forward with cold eyes.")
         type_text_slowly("\"You chose chaos over brotherhood.\"")
@@ -166,6 +229,14 @@ def final_duel_intro(character):
 
 
 def ryuichi_random_dialogue(character):
+    """
+    Display a random line of dialogue from Ryūichi based on the player's honor.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains "honor" and "path"
+    :postcondition: one randomized dialogue line may be printed
+    :return: the selected dialogue line as a string
+    """
     if character["path"] == "samurai":
         return
 
@@ -194,6 +265,14 @@ def ryuichi_random_dialogue(character):
     type_text_slowly(f"\nRyūichi: {line}\n")
 
 def ryuichi_flashback(character):
+    """
+    Display a flashback memory based on the player's bond with Ryūichi.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains "bond_with_Ryūichi"
+    :postcondition: one randomized memory scene is printed
+    :return: the displayed flashback text as a string
+    """
     if character["bond_with_Ryūichi"] >= 4:
         flashbacks = [
             "You remember the two of you stealing training swords as children.\n",
@@ -217,10 +296,18 @@ def ryuichi_flashback(character):
     type_text_slowly(random.choice(flashbacks))
 
 def determine_betrayal(character):
+    """
+    Determine whether Ryūichi betrays the player based on bond and honor.
+
+    :param character: a dictionary representing the player's character
+    :precondition: character dictionary contains "path", "bond_with_Ryūichi", and "honor"
+    :postcondition: character "betrayal" or "honor" changes based on choice
+    :return: the updated character dictionary
+    """
     if character["path"] == "samurai":
         character["betrayal"] = False
         return
-    if character["bond_with_Ryūichi"] < -2 or character["honor"] <= -4:
+    if character["bond_with_Ryūichi"] <= -2 or character["honor"] <= -4:
         character["betrayal"] = True
     else:
         character["betrayal"] = False
@@ -228,6 +315,14 @@ def determine_betrayal(character):
 
 
 def final_boss_intro_samurai():
+    """
+    Display the final boss introduction for the Samurai path.
+
+    :precondition: character is level 3 and at location (9, 9)
+    :precondition: character dictionary "path" is samurai
+    :postcondition: the Samurai final boss intro narrative is printed
+    :return: the printed Samurai boss intro story as a string
+    """
     type_text_slowly("\nThe wind dies as you step into the Emperor's palace.")
     type_text_slowly("Ash drifts slowly through the air like falling snow.")
     type_text_slowly("You bow and greet the Emperor.\n")
@@ -255,6 +350,14 @@ def final_boss_intro_samurai():
 
 
 def final_boss_outro_samurai():
+    """
+    Display the concluding narration after Samurai character defeats Ryūichi in the final duel.
+
+    :precondition: character dictionary "path" is samurai
+    :precondition: character has defeated Ryūichi
+    :postcondition: Ryūichi’s defeat scene is printed to the terminal
+    :return: the displayed outro narration as a string
+    """
     type_text_slowly("\nRyūichi staggers back, dropping to one knee.")
     type_text_slowly("His blade slips from his fingers and clatters across the stone.\n")
 
@@ -263,6 +366,14 @@ def final_boss_outro_samurai():
     type_text_slowly("\"Let the world remember only one of us.\"\n")
 
 def final_boss_intro_ronin():
+    """
+    Display the opening narration for the Ronin entering the Emperor’s palace.
+
+    :precondition: character has chosen the Ronin path and reached the final area
+    :precondition: character is level 3 and at location (9, 9)
+    :postcondition: the final boss intro narrative is printed
+    :return: the displayed Ronin boss intro as a string
+    """
     type_text_slowly("\nYou storm the palace with Ryūichi at your side.")
     type_text_slowly("The great wooden gates burst open under your combined force.")
 
@@ -283,6 +394,14 @@ def final_boss_intro_ronin():
     type_text_slowly("\"Your reign ends here,\" he says.\n")
 
 def emperor_death_scene():
+    """
+    Display the death scene of the Emperor after being defeated in combat.
+
+    :precondition: character has chosen the Ronin path
+    :precondition: the Emperor has been defeated in the final battle
+    :postcondition: the Emperor’s death narration is printed to the terminal
+    :return: the displayed Emperor death narrative as a string
+    """
     type_text_slowly("\nThe Emperor collapses to his knees.")
     type_text_slowly("Blood spills across the marble floor of the throne room.")
     type_text_slowly("\"So... this is the end,\" he whispers.")
@@ -290,6 +409,14 @@ def emperor_death_scene():
     type_text_slowly("The Emperor of the Rising Sun is slain.\n")
 
 def final_boss_outro_ronin():
+    """
+    Display the concluding narration after the Ronin successfully defeats the Emperor.
+
+    :precondition: character has chosen the Ronin path
+    :precondition: the Emperor has been defeated by the Ronin
+    :postcondition: the fall of the Empire narration is printed to the terminal
+    :return: the displayed Ronin victory outro as a string
+    """
     type_text_slowly("\nThe Emperor's body lies motionless at your feet.")
     type_text_slowly("The throne stands empty.")
     type_text_slowly("For the first time in generations, the Empire has no master.\n")
@@ -298,6 +425,15 @@ def final_boss_outro_ronin():
     type_text_slowly("You have ended the rule of the Rising Sun.\n")
 
 def betrayal_confrontation_intro():
+    """
+    Display the confrontation introduction when Ryūichi reveals his betrayal.
+
+    :precondition: character is "ronin" path and the Emperor has been defeated
+    :precondition: the character’s bond with Ryūichi <= -2 and honor <= -4
+    :precondition: the character’s betrayal condition has been set to True
+    :postcondition: the betrayal confrontation narration is printed
+    :return: the displayed betrayal confrontation text as a string
+    """
     type_text_slowly("\nYou feel a presence shift behind you.")
     type_text_slowly("Footsteps whisper across the stone.")
     type_text_slowly("Steel leaves its sheath.\n")
@@ -310,6 +446,15 @@ def betrayal_confrontation_intro():
     type_text_slowly("You already know what comes next.\n")
 
 def betrayal_spared_scene():
+    """
+    Display the scene where Ryūichi chooses to spare the player after betrayal.
+
+    :precondition: character is "ronin" path and the Emperor has been defeated
+    :precondition: the character’s bond with Ryūichi >= 3
+    :precondition: the character’s betrayal condition has been set to True
+    :postcondition: the mercy scene is printed to the terminal
+    :return: the displayed spared scene narration as a string
+    """
     type_text_slowly("Your grip loosens.")
     type_text_slowly("Your blade lowers to the stone.")
     type_text_slowly("\"Then strike,\" you whisper. \"If that is the end you seek.\"")
@@ -323,13 +468,31 @@ def betrayal_spared_scene():
 
 
 def betrayal_duel_scene():
+    """
+    Display the final duel scene between the player and Ryūichi after betrayal.
+
+    :precondition: character is "ronin" path and the Emperor has been defeated
+    :precondition: the character’s bond with Ryūichi <= 3
+    :precondition: the character’s betrayal condition has been set to True
+    :postcondition: the betrayal duel narration is printed
+    :return: the displayed duel scene narration as a string
+    """
     type_text_slowly("Your blades rise at the same time.")
     type_text_slowly("There are no words left to save you now.\n")
 
     type_text_slowly("Steel clashes one last time between brothers.")
-    type_text_slowly("The sound echoes through the ruins like a breaking heart.")
+    type_text_slowly("The sound echoes through the ruins like a breaking heart.\n")
 
 def rebuild_scene():
+    """
+    Display the rebuilding ending where the player and Ryūichi restore the Empire together.
+
+    :precondition: character is "ronin" path and the Emperor has been defeated
+    :precondition: the character’s bond with Ryūichi >= 3
+    :precondition: the character’s betrayal condition has been set to False
+    :postcondition: the rebuilding ending narration is printed
+    :return: the displayed rebuilding scene narration as a string
+    """
     type_text_slowly("\nThe battlefield falls silent.")
     type_text_slowly("Smoke drifts through shattered halls.")
     type_text_slowly("You stand among the dead — breathing.\n")
@@ -343,12 +506,22 @@ def rebuild_scene():
     type_text_slowly("But as your brother once more.\n")
 
 def abandonment_scene():
-    type_text_slowly("\nYou stand alone upon the ruins of the throne.")
-    type_text_slowly("The Empire is yours — but the victory feels hollow.\n")
+    """
+    Display the ending where Ryūichi abandons the player after the Emperor’s defeat.
+
+    :precondition: character is "ronin" path and the Emperor has been defeated
+    :precondition: the character’s bond with Ryūichi <= 3
+    :precondition: the character’s betrayal condition has been set to False
+    :postcondition: the abandonment ending narration is printed
+    :return: the displayed abandonment scene narration as a string
+    """
 
     type_text_slowly("Ryūichi watches you from a distance.")
     type_text_slowly("\"Power has changed you,\" he says quietly.")
     type_text_slowly("\"I will not walk beside another tyrant.\"")
 
-    type_text_slowly("Without another word, he turns and disappears into the ruin.")
+    type_text_slowly("\nYou stand alone upon the ruins of the throne.")
+    type_text_slowly("The Empire is yours — but the victory feels hollow.\n")
+
+
 
