@@ -62,12 +62,12 @@ depends on your chosen path and the decisions you make:
 | (d) Minimized scope and lifetime of variables | All modules |
 | (e) Decomposition into small, atomic functions | All modules (`challenges.py` 24+ functions) |
 | (f) Simple flat code | All modules |
-| (g) Demonstration of comprehensions | `challenges.py` 133-136 |
+| (g) Demonstration of comprehensions | `challenges.py` lines 132-135 |
 | (h) Selection using if-statements | Throughout all files |
-| (i) Repetition using for-loop/while loop | `board.py` 46-49, `game.py` 71, `movement.py` 23 |
-| (j) Use of the membership operator | `movement.py` 36, 73, `game.py` 63, `challenges.py` |
-| (k) Appropriate use of the range function | `board.py` 46-47, 102-104, `movement.py` 73 |
-| (l) Thoughtful use of functions from itertools | `challenges.py` line 5, 41 |
+| (i) Repetition using for-loop/while loop | `board.py` lines 46-49, `game.py` line 71, `movement.py` line 23 |
+| (j) Use of the membership operator | `movement.py` lines 36, 73, `game.py` line 63, `challenges.py` |
+| (k) Appropriate use of the range function | `board.py` lines 46-47, 102-104, `movement.py` line 73 |
+| (l) Thoughtful use of functions from itertools | `challenges.py` lines 5, 52 |
 | (m) The random module | `board.py` line 5, `challenges.py` line 6 |
 | (n) Function annotations | `character.py` line 8 |
 | (o) Doctests and/or unit tests for every single function | `unit_tests/` directory |
@@ -105,6 +105,7 @@ TermProject/
 │   │   ├── test_moral_challenge.py
 │   │   ├── test_pilgrim_challenge.py
 │   │   ├── test_riddle_challenge.py
+│   │   ├── test_ryuichi_present.py
 │   │   ├── test_sacrifice_challenge.py
 │   │   ├── test_shrine_challenge.py
 │   │   ├── test_spirit_challenge.py
