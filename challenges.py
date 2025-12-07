@@ -123,8 +123,18 @@ def combat_challenge(character):
     :postcondition: character hp and experience change based on choice
     :return: the updated character dictionary
     """
-    foes = ["lost child", "rogue samurai", "wild boar", "mountain thief", "seductive ninja"]
-    enemy = random.choice(foes)
+    foes = [
+        {"name": "lost child", "min_level": 1},
+        {"name": "wild boar", "min_level": 1},
+        {"name": "mountain thief", "min_level": 2},
+        {"name": "rogue samurai", "min_level": 3},
+        {"name": "seductive ninja", "min_level": 3}
+    ]
+    available_foes = [
+        foe for foe in foes
+        if foe["min_level"] <= character["level"]
+    ]
+    enemy = random.choice(available_foes)
     enemy_hp = 6 + (character["level"] * 3)
 
     type_text_slowly(f"\nA {enemy} challenges you to battle!")
