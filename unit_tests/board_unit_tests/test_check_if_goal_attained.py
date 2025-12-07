@@ -1,3 +1,7 @@
+"""
+Jameel Mohammed
+A01430376
+"""
 from unittest import TestCase
 from board import check_if_goal_attained
 
