@@ -128,16 +128,22 @@ def combat_challenge(character):
                 damage = 2 * character["level"]
                 character["hp"] -= damage
                 type_text_slowly(f"\nThe {enemy} hits you for {damage} damage!")
+                type_text_slowly(f"\nYou lose {damage} HP!")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "2":
-            character["hp"] += 2 * character["level"]
-            type_text_slowly(f"\nYou defend against the {enemy} and drink a healing potion")
+            heal = 2
+            if character["hp"] == character["max_hp"]:
+                type_text_slowly(f"You block {enemy}'s attack successfully.")
+            else:
+                character["hp"] += heal
+                type_text_slowly(f"You block and drink a health potion. You heal for {heal} HP")
             print(f"HP: {character['hp']}/{character['max_hp']}")
 
         elif choice == "3":
             if random.randint(1, 10) >= 4:
                 type_text_slowly(f"\nYou are being watched by the locals and can't run! The {enemy} strikes you!")
+                type_text_slowly(f"\nYou lose 1 HP!")
                 character["hp"] -= 1
             else:
                 type_text_slowly("\nYou cover your face and flee!")
@@ -188,7 +194,7 @@ def shrine_challenge(character):
             type_text_slowly("\nThis shrine's water tastes like moldy feet and old coins.")
         else:
             character["hp"] = min(character["hp"] + heal, character["max_hp"])
-            type_text_slowly(f"\nYou feel warmth. HP restored by {heal}.")
+            type_text_slowly(f"\nYou feel warmth. You gain {heal}HP.")
             print(f"HP: {character['hp']}/{character['max_hp']}")
     else:
         print("\nYou bow and walk away.")
@@ -255,7 +261,7 @@ def traveler_challenge(character):
             type_text_slowly("\nYou pretend you hear nothing.")
             type_text_slowly("Ryūichi gives the traveler a few coins then glares at you in disappointment.")
         else:
-            type_text_slowly("Y\nou leave the traveler behind without looking back.")
+            type_text_slowly("\nYou leave the traveler behind without looking back.")
 
 def gamble_challenge(character):
     type_text_slowly("\nA dice gambler challenges you.")
@@ -598,8 +604,11 @@ def boss_fight(character, boss_name):
         elif choice == "2":
             if random.randint(1, 10) >= 3:
                 heal = 5
-                character["hp"] += heal
-                type_text_slowly(f"You block and drink a health potion. You heal for {heal} HP")
+                if character["hp"] == character["max_hp"]:
+                    type_text_slowly(f"You block {boss_name}'s attack successfully.")
+                else:
+                    character["hp"] += heal
+                    type_text_slowly(f"You block and drink a health potion. You heal for {heal} HP")
                 print(f"HP: {character['hp']}/{character['max_hp']}")
             else:
                 damage = random.randint(1, 5)
