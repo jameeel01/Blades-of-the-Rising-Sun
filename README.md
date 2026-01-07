@@ -28,6 +28,9 @@ in feudal Japan. Players choose between the path of the Samurai or Ronin, naviga
 at the Emperor's palace. The game features a rich narrative, character progression
 through three levels, and multiple endings based on player choices.
 
+<img width="1555" height="942" alt="image" src="https://github.com/user-attachments/assets/8e6abb48-b120-4b16-9f61-c88735b712c6" />
+<img width="1555" height="823" alt="image" src="https://github.com/user-attachments/assets/b79e63e1-7a40-4bcb-8562-a2d118f49da7" />
+
 ## Game Objective
 
 The primary objective of Blades of the Rising Sun is to navigate the 10 x 10 game
